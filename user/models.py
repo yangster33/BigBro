@@ -17,9 +17,3 @@ class MyUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
-    def delete(self, *args, **kwargs):
-        path = self.avatar.path
-        if path:
-            os.remove(path)
-        super(CustomUser, self).delete(*args, **kwargs)
