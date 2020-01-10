@@ -1,0 +1,73 @@
+{% extends "auth_base.html" %}
+{% block title %}登陆{% endblock %}
+{% block box %}
+<div class="login-box">
+    <div class="login-logo">
+        <a class="bg-gray color-palette" href="#"><b>Big</b>Bro</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">输入你的账号密码，亲</p>
+
+            {{ form.media }}
+
+
+            <div class="bg-danger color-palette mystyle">
+                {% if form.errors and not form.non_field_errors %}
+                <p class="errornote mystyle2">
+                    {% if form.errors.items|length == 1 %}"Please correct the error below."{% else %}"Please correct the
+                    errors
+                    below."{% endif %}
+                </p>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p class="errornote mystyle2">
+                    {{ error }}
+                </p>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div id="content-main">
+                <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+                    <div class="form-row">
+                        <div class="input-group mb-3">
+                            {{ form.username.errors }}
+                            {{ form.username }}
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user-circle"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group mb-3">
+                            {{ form.password.errors }}
+                            {{ form.password }}
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="next" value="{{ next }}">
+                        </div>
+                    </div>
+                    {% url 'admin_password_reset' as password_reset_url %}
+                    {% if password_reset_url %}
+                    <div class="password-reset-link">
+                        <a href="{{ password_reset_url }}">'Forgotten your password or username?'</a>
+                    </div>
+                    {% endif %}
+                    <div class="submit-row">
+                        <label>&nbsp;</label><input type="submit" class="btn btn-primary btn-block" value="Log in">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "auth_base.html" %}
+{% block title %}已注销{% endblock %}
+{% block box %}
+<div class="login-box">
+    <div class="login-logo">
+        <a class="bg-gray color-palette" href="/mylogin"><b>Big</b>Bro</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">感谢你的使用，亲</p>
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="../media/avatars/default.jpg"
+                        alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">大龙山楠哥</h3>
+
+                <p class="text-muted text-center">全栈工程师</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>单位</b> <a class="float-right">四川设计院</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>电话</b> <a class="float-right">15223389255</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>邮箱</b> <a class="float-right">909841193@qq.com</a>
+                    </li>
+                </ul>
+
+                <a href={% url 'login' %} class="btn btn-primary btn-block"><b>返回登陆页</b></a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

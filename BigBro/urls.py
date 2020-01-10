@@ -15,7 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
+from django.views.static import serve
+
+
+from user.views import MyLogin, MyLogout, TestView
+from .settings import MEDIA_ROOT
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('login/', MyLogin.as_view(), name='login'),
+    path('logout/', MyLogout.as_view(), name='logout'),
+    path('test/', TestView.as_view(), name='test'),
+    # path('media/<str:path>/', serve, {"document_root":MEDIA_ROOT}),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+] 
+
+
+# print(settings.MEDIA_URL, settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  
+
+
