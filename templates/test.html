@@ -10,5 +10,7 @@
     {% for i in object_list %}
     <img src="/media/{{ i.avatar.url }}">
     {% endfor %}
+
+    <a href="{% url 'logout' %}" class="nav-link">注销</a>
 </body>
 </html>
