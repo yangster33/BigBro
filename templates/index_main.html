@@ -1,0 +1,321 @@
+{% extends "index_base_sidebar.html" %}
+{% block cards %}
+<div class="row">
+    <div class="col-lg-3">
+
+        <!-- Profile Image -->
+        <div class="card card-navy card-outline">
+            <div class="ribbon-wrapper ribbon-xl">
+                <div class="ribbon bg-warning text-lg">
+                    2049最佳灵魂员工
+                </div>
+            </div>
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="../static/dist/img/user4-128x128.jpg"
+                        alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">{{ object_list.0 }}</h3>
+
+                <p class="text-muted text-center">全栈</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>职位</b> <a class="float-right">设计助理</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>勤奋指数</b> <a class="float-right">172<span class="description-percentage text-success"><i
+                                    class="fas fa-caret-up"></i></span></a>
+                </ul>
+
+                <a href="#" class="btn btn-secondary btn-block"><b>报表</b></a>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        <!-- Achievement Box -->
+        <div class="card card-navy card-outline">
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="card-body">
+                    <p>千里之行，始于足下。</p>
+                    <span class="float-right">
+                        <p>——<cite title="Source Title">老子</cite></p>
+                    </span>
+                </div>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>传说事迹</b> <a class="float-right">15</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>史诗行为</b> <a class="float-right">26</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>稀有业绩</b> <a class="float-right">47</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <div class="col-lg-9">
+        <div class="card card-navy card-outline">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fa fa-calendar"></i> 上周数据总览</h5>
+                <br />
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage 
+                                {% if last_week_per > 0 or last_week_per == '∞' %}
+                                {{ 'text-danger"><i class="fas fa-caret-up"></i>' }}
+                                {% elif last_week_per < 0 %}
+                                {{ 'text-success"><i class="fas fa-caret-down"></i>' }}
+                                {% else %}
+                                {{ 'text-warning"><i class="fas fa-caret-left"></i>' }}
+                                {% endif %}
+                                    {{ last_week_per }}%</span>
+                                <h5 class=" description-header">￥{{ last_week_costs }}</h5>
+                                    <span class="description-text">上周差旅费用</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage 
+                                {% if last_season_per > 0 or last_season_per == '∞' %}
+                                {{ 'text-danger"><i class="fas fa-caret-up"></i>' }}
+                                {% elif last_season_per < 0 %}
+                                {{ 'text-success"><i class="fas fa-caret-down"></i>' }}
+                                {% else %}
+                                {{ 'text-warning"><i class="fas fa-caret-left"></i>' }}
+                                {% endif %}
+                                    {{ last_season_per }}%</span>
+                                <h5 class=" description-header">￥{{ this_season_costs }}</h5>
+                                    <span class="description-text">本季度差旅成本</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage 
+                                    {% if last_year_per > 0 or last_year_per == '∞' %}
+                                    {{ 'text-danger"><i class="fas fa-caret-up"></i>' }}
+                                    {% elif last_year_per < 0 %}
+                                    {{ 'text-success"><i class="fas fa-caret-down"></i>' }}
+                                    {% else %}
+                                    {{ 'text-warning"><i class="fas fa-caret-left"></i>' }}
+                                    {% endif %}
+                                        {{ last_year_per }}%</span>
+                                <h5 class=" description-header">￥{{ this_year_costs }}</h5>
+                                    <span class="description-text">本年差旅成本</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block">
+                                <span class="description-percentage text-success">
+                                    <i class="fas fa-bus"></i>
+                                    已出差
+                                    {% if location_list.0.0 != '重庆' %}
+                                    {{ location_list.0.1 }}
+                                    {% elif location_list.1.0 != '重庆' %}
+                                    {{ location_list.1.1 }}
+                                    {% endif %}
+                                    天
+                                </span>
+                                <h5 class="description-header">
+                                    {% if location_list.0.0 != '重庆' %}
+                                    {{ location_list.0.0 }}
+                                    {% elif location_list.1.0 != '重庆' %}
+                                    {{ location_list.1.0 }}
+                                    {% endif %}</h5>
+                                <span class="description-text">最爱出差地点</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div><!-- /.card -->
+        </div>
+        <div class="card card-warning card-outline">
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="post">
+                        <div class="user-block">
+                            <img class="img-circle img-bordered-sm" src="../static/dist/img/user1-128x128.jpg"
+                                alt="user image">
+                            <span class="username">
+                                <a href="#">林兴文</a>
+                                <i class="fas fa-bell text-danger float-right btn-tool"></i>
+                            </span>
+                            <span class="description">2020-10-12 14:57 </span>
+                        </div>
+                        <!-- /.user-block -->
+                        <p>
+                            我们遇到什么困难，也不要怕，微笑着面对他，消除恐惧的最好办法就是面对恐惧，坚持，才是胜利，加油，奥利给！！！
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-indigo card-outline">
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="post">
+                        <div class="user-block">
+                            <img class="img-circle img-bordered-sm" src="../static/dist/img/user4-128x128.jpg"
+                                alt="user image">
+                            <span class="username">
+                                <a href="#">杨星楠</a>
+                                <i class="fas fa-bell text-success float-right btn-tool"></i>
+                            </span>
+                            <span class="description">2020-10-12 15:59 </span>
+                        </div>
+                        <!-- /.user-block -->
+                        <p>
+                            领导说得对！！！！！！！！！！！！！！！
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">待办流程</h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">
+                                #
+                            </th>
+                            <th style="width: 20%">
+                                流程名称
+                            </th>
+                            <th style="width: 30%">
+                                下一步人员
+                            </th>
+                            <th>
+                                流程进度
+                            </th>
+                            <th style="width: 8%" class="text-center">
+                                状态
+                            </th>
+                            <th style="width: 20%">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                <a>
+                                    AdminLTE v3
+                                </a>
+                                <br />
+                                <small>
+                                    Created 01.01.2019
+                                </small>
+                            </td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="../static/dist/img/avatar.png">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="../static/dist/img/avatar2.png">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="../static/dist/img/avatar3.png">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="../static/dist/img/avatar04.png">
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="project_progress">
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-volumenow="57"
+                                        aria-volumemin="0" aria-volumemax="100" style="width: 57%">
+                                    </div>
+                                </div>
+                                <small>
+                                    57% Complete
+                                </small>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">Success</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    编辑
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                #
+                            </td>
+                            <td>
+                                <a>
+                                    AdminLTE v3
+                                </a>
+                                <br />
+                                <small>
+                                    Created 01.01.2019
+                                </small>
+                            </td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="../static/dist/img/avatar.png">
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar" src="../static/dist/img/avatar2.png">
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="project_progress">
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-volumenow="47"
+                                        aria-volumemin="0" aria-volumemax="100" style="width: 47%">
+                                    </div>
+                                </div>
+                                <small>
+                                    47% Complete
+                                </small>
+                            </td>
+                            <td class="project-state">
+                                <span class="badge badge-success">Success</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <a class="btn btn-info btn-sm" href="#">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    编辑
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

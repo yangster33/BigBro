@@ -1,0 +1,94 @@
+{% extends "index_base.html" %}
+{% load static %}
+{% block title %}{{ object_list.0 }}{% endblock %}
+
+{% block sidebar %}
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-navy elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link bg-navy">
+        <img src={% static "dist/img/AdminLTELogo.png" %} alt="BigBro Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">老大哥系统</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src={% static "dist/img/user2-160x160.jpg" %} class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">杨星楠</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link">
+                        <i class="nav-icon fas fa-address-book"></i>
+                        <p>
+                            主页
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'charts' %}" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            图表
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'flows' %}" class="nav-link">
+                        <i class="nav-icon fas fa-stream"></i>
+                        <p>
+                            流程
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./bigbroindex.html" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            存量
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./bigbroindex.html" class="nav-link">
+                        <i class="nav-icon fas fa-share-alt"></i>
+                        <p>
+                            共享
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./bigbroindex.html" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            同事
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="./bigbroindex.html" class="nav-link">
+                        <i class="nav-icon fas fa-wheelchair"></i>
+                        <p>
+                            大龙山实验室
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+{% endblock %}

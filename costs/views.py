@@ -8,7 +8,7 @@ from .timetraveler import which_week, which_season, yangster_no1
 
 # Create your views here.
 class IndexView(ListView):
-    template_name = 'index.html'
+    template_name = 'index_main.html'
     model = Costs
 
     def get_queryset(self):
