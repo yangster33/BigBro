@@ -22,11 +22,18 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>职位</b> <a class="float-right">设计助理</a>
+                        <b>职位</b> <a class="float-right">{{ user_archives.position }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>勤奋指数</b> <a class="float-right">172<span class="description-percentage text-success"><i
-                                    class="fas fa-caret-up"></i></span></a>
+                        <b>勤奋指数</b> <a class="float-right">{{ user_archives.diligent_num }}
+                            {% if user_archives.is_diligent_num_rise %}
+                                <span class="description-percentage text-success">
+                                    <i class="fas fa-caret-up"></i></span></a>
+                            {% else %}
+                                <span class="description-percentage text-danger">
+                                    <i class="fas fa-caret-down"></i></span></a>
+                            {% endif %}
+                                
                 </ul>
 
                 <a href="#" class="btn btn-secondary btn-block"><b>报表</b></a>
@@ -48,13 +55,13 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>传说事迹</b> <a class="float-right">15</a>
+                        <b>传说事迹</b> <a class="float-right">{{ user_archives.legend }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>史诗行为</b> <a class="float-right">26</a>
+                        <b>史诗行为</b> <a class="float-right">{{ user_archives.epic }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>稀有业绩</b> <a class="float-right">47</a>
+                        <b>稀有业绩</b> <a class="float-right">{{ user_archives.rare }}</a>
                     </li>
                 </ul>
             </div>

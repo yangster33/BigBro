@@ -1,0 +1,275 @@
+{% extends "index_base_sidebar.html" %}
+{% block cards %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card card-navy card-outline">
+      <div class="ribbon-wrapper ribbon-xl">
+        <div class="ribbon bg-warning text-lg">
+          上周节省第1名 1#
+        </div>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-calendar"></i> 上周数据总览</h5>
+        <br />
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right">
+                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
+                  17%</span>
+                <h5 class="description-header">￥2577.5</h5>
+                <span class="description-text">上周差旅费用</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right">
+                <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
+                  0%</span>
+                <h5 class="description-header">￥13358.9</h5>
+                <span class="description-text">本季度差旅成本</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right">
+                <span class="description-percentage text-danger"><i class="fas fa-caret-up"></i>
+                  20%</span>
+                <h5 class="description-header">￥16123.9</h5>
+                <span class="description-text">本年差旅成本</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-6">
+              <div class="description-block">
+                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i></span>
+                <h5 class="description-header">1</h5>
+                <span class="description-text">年度成本节省排名</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-globe"></i> 年度数据明细</h5>
+        <br />
+        <div class="card-body">
+          <div class="position-relative mb-12">
+            <canvas id="ThisYearChart" height="200px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-globe"></i> 年度数据对比</h5>
+        <br />
+        <div class="card-body">
+          <div class="position-relative mb-12">
+            <canvas id="ThisYearPieChart" height="200px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><i class="fa fa-globe"></i> 季度数据对比</h5>
+        <br />
+        <div class="card-body">
+          <div class="position-relative mb-12">
+            <canvas id="ThisSeaPieChart" height="200px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script type="text/javascript">
+  $(function () {
+    'use strict'
+
+    var ticksStyle = {
+      fontColor: '#495057',
+      fontStyle: 'bold'
+    }
+
+    var mode = 'index'
+    var intersect = true
+
+    var $salesChart = $('#ThisYearChart')
+    var salesChart = new Chart($salesChart, {
+      type: 'bar',
+      data: {
+        labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [
+          {
+            label: '杨星楠',
+            backgroundColor: '#007bff',
+            borderColor: '#007bff',
+            data: [11000, 2000, 3000, 2500, 2700, 2500, 3000, 200, 3000, 2100, 5400, 2330]
+          },
+          {
+            label: '杨星楠2',
+            backgroundColor: '#ced4da',
+            borderColor: '#ced4da',
+            data: [700, 1700, 2700, 2000, 1800, 1500, 2000, 200, 1200, 2400, 2577, 200]
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          mode: mode,
+          intersect: intersect
+        },
+        hover: {
+          mode: mode,
+          intersect: intersect
+        },
+        //   legend: {
+        //     display: false
+        //   },
+        scales: {
+          yAxes: [{
+            // display: false,
+            gridLines: {
+              display: true,
+              lineWidth: '4px',
+              color: 'rgba(0, 0, 0, .2)',
+              zeroLineColor: 'transparent'
+            },
+            ticks: $.extend({
+              beginAtZero: true,
+
+              // Include a dollar sign in the ticks
+              callback: function (value, index, values) {
+                if (value >= 1000) {
+                  value /= 1000
+                  value += 'k'
+                }
+                return '￥' + value
+              }
+            }, ticksStyle)
+          }],
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display: false
+            },
+            ticks: ticksStyle
+          }]
+        }
+      }
+    })
+  })
+  $(function () {
+    'use strict'
+
+    var ticksStyle = {
+      fontColor: '#495057',
+      fontStyle: 'bold'
+    }
+
+    var mode = 'index'
+    var intersect = true
+
+    var $pieChart = $('#ThisYearPieChart')
+    var pieChart = new Chart($pieChart, {
+      type: 'doughnut',
+      data: {
+        labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [
+          {
+            label: '杨星楠',
+            backgroundColor: ['#000000', '#111', '#222', '333', '444', '555', '666', '777', '#007bff',],
+            borderColor: '#007bff',
+            data: [11000, 2000, 3000, 2500, 2700, 2500, 3000, 200, 3000, 2100, 5400, 2330]
+          },
+        ]
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                return previousValue + currentValue;
+              });
+              var currentValue = dataset.data[tooltipItem.index];
+              var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+              return percentage + "%";
+            },
+            title: function (tooltipItem, data) {
+              return data.labels[tooltipItem[0].index];
+            }
+          }
+        }
+      }
+    })
+  })
+  $(function () {
+    'use strict'
+
+    var ticksStyle = {
+      fontColor: '#495057',
+      fontStyle: 'bold'
+    }
+
+    var mode = 'index'
+    var intersect = true
+
+    var $pieChart = $('#ThisSeaPieChart')
+    var pieChart = new Chart($pieChart, {
+      type: 'doughnut',
+      data: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        datasets: [
+          {
+            label: '杨星楠',
+            backgroundColor: ['#000000', '#111', '#222', '333', '444', '555', '666', '777', '#007bff',],
+            borderColor: '#007bff',
+            data: [11000, 2000, 3000, 2500, 2700, 2500, 3000, 200, 3000, 2100, 5400, 2330]
+          },
+        ]
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                return previousValue + currentValue;
+              });
+              var currentValue = dataset.data[tooltipItem.index];
+              var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+              return percentage + "%";
+            },
+            title: function (tooltipItem, data) {
+              return data.labels[tooltipItem[0].index];
+            }
+          }
+        }
+      }
+    })
+  })
+</script>
+{% endblock %}

@@ -104,10 +104,20 @@ class ChartsView(ListView):
             month=1, day=1), now, self.request.user, qs)
 
         last_week_list = sorted(last_week_data[2].items(), key=lambda x: x[1])
-        last_week_num = yangster_no1(last_week_list)[self.request.user]
         this_year_list = sorted(this_year_data[2].items(), key=lambda x: x[1])
-        this_year_num = yangster_no1(this_year_list)[self.request.user]
+        try:
+            last_week_num = yangster_no1(last_week_list)[self.request.user]
+            this_year_num = yangster_no1(this_year_list)[self.request.user]
+        except KeyError:
+            pass
+        
+        user_archives = MyUser.objects.get(username=self.request.user)
 
+        update_dict = dict(
+            user_archives=user_archives,
+        )
+
+        context.update(update_dict)
         # print(last_week_num)
         return context
 

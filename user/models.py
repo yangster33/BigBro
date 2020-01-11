@@ -10,6 +10,7 @@ class MyUser(AbstractUser):
         verbose_name='头像', upload_to="avatars", default='avatars/default.jpg',)
 
     diligent_num = models.IntegerField(verbose_name='勤奋指数', default=80)
+    is_diligent_num_rise = models.BooleanField(verbose_name='勤奋指数状态', default=False)
 
     legend = models.IntegerField(verbose_name='传说事迹', default=0)
     epic = models.IntegerField(verbose_name='史诗行为', default=0)
