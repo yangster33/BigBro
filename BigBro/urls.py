@@ -19,10 +19,12 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.static import serve
+from django.contrib.auth.decorators import login_required
 
 
 from user.views import MyLogin, MyLogout, TestView
 from .settings import MEDIA_ROOT
+from costs.views import IndexView, FlowsView, ChartsView
 
 
 urlpatterns = [
@@ -30,6 +32,9 @@ urlpatterns = [
     path('login/', MyLogin.as_view(), name='login'),
     path('logout/', MyLogout.as_view(), name='logout'),
     path('test/', TestView.as_view(), name='test'),
+    path('index/', login_required(IndexView.as_view()), name='index'),
+    path('charts/', login_required(ChartsView.as_view()), name='charts'),
+    path('flows/', login_required(FlowsView.as_view()), name='flows'),
     # path('media/<str:path>/', serve, {"document_root":MEDIA_ROOT}),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ] 

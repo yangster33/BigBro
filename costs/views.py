@@ -1,12 +1,15 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 
 import datetime
 
 from .models import Costs
 from .timetraveler import which_week, which_season, yangster_no1
+from user.models import MyUser
 
 # Create your views here.
+
+
 class IndexView(ListView):
     template_name = 'index_main.html'
     model = Costs
@@ -59,6 +62,8 @@ class IndexView(ListView):
             last_year_per = round(
                 (this_year_costs - last_year_costs) / last_year_costs * 100, 2)
 
+        user_archives = MyUser.objects.get(username=self.request.user)
+
         update_dict = dict(
             last_week_costs=last_week_costs,
             last_2week_costs=last_2week_costs,
@@ -71,6 +76,7 @@ class IndexView(ListView):
             last_week_per=last_week_per,
             last_season_per=last_season_per,
             last_year_per=last_year_per,
+            user_archives=user_archives,
         )
 
         context.update(update_dict)
@@ -80,11 +86,11 @@ class IndexView(ListView):
 
 
 class ChartsView(ListView):
-    template_name = 'charts.html'
+    template_name = 'index_charts.html'
     model = Costs
 
     def get_context_data(self, **kargs):
-        
+
         context = super().get_context_data(**kargs)
 
         now = datetime.datetime.now().date()
@@ -97,10 +103,25 @@ class ChartsView(ListView):
         this_year_data = Costs.global_compare(now.replace(
             month=1, day=1), now, self.request.user, qs)
 
-        last_week_list = sorted(last_week_data[2].items(),key=lambda x:x[1])
+        last_week_list = sorted(last_week_data[2].items(), key=lambda x: x[1])
         last_week_num = yangster_no1(last_week_list)[self.request.user]
-        this_year_list = sorted(this_year_data[2].items(),key=lambda x:x[1])
+        this_year_list = sorted(this_year_data[2].items(), key=lambda x: x[1])
         this_year_num = yangster_no1(this_year_list)[self.request.user]
 
         # print(last_week_num)
         return context
+
+
+class FlowsView(TemplateView):
+    template_name = 'index_flows.html'
+    model = Costs
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.get_context_data()
+        print(request.GET)
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        text = request.POST.get('text', None)

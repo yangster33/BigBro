@@ -90,14 +90,15 @@ class Costs(models.Model):
     @classmethod
     def global_compare(cls, startday, enday, user_obj, qs):
 
-        if qs.exists():
-            username_qs = qs.values(
+        username_qs = qs.values(
                 'account__username').distinct().order_by('account__username')
-            user_list = []
-            for i in username_qs:
-                user_list.append(User.objects.get(
-                    username=i['account__username']))
+        user_list = []
+        for i in username_qs:
+            user_list.append(User.objects.get(
+                username=i['account__username']))
 
+        if qs.exists():
+            
             costs_dict = {user: 0 for user in user_list}
             for user in costs_dict:
                 costs_dict[user] = cls.days_costs(
