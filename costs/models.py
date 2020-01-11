@@ -1,5 +1,8 @@
 from django.db import models
+from django.db.models import Sum, Count
 
+from .timetraveler import yangster_no1, which_season, which_week
+from user.models import MyUser as User
 # Create your models here.
 class Costs(models.Model):
 
