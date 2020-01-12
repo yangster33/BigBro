@@ -4,11 +4,11 @@ from .models import Costs
 
 
 class CostsAdminForm(forms.ModelForm):
-    location = forms.CharField(widget=forms.Textarea, label='出差地点')
+    # location = forms.CharField(widget=forms.Textarea, label='出差地点')
 
     class Meta:
         model = Costs
-        fields = ('account', 'travel_date', 'location', 'work', 'employee_status', 'trans_cost',
+        fields = ('account', 'travel_date', 'location', 'work', 'trans_cost',
                   'hotel_cost', 'local_trans_cost', 'meat_cost', 'local_car_cost', 'other_cost_1',
                   'other_cost_2', 'other_cost_1',)
 

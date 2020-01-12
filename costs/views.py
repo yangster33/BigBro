@@ -6,11 +6,12 @@ import datetime
 from .models import Costs
 from .timetraveler import which_week, which_season, yangster_no1
 from user.models import MyUser
+from .middleware import ArchivesMixin
 
 # Create your views here.
 
 
-class IndexView(ListView):
+class IndexView(ArchivesMixin, ListView):
     template_name = 'index_main.html'
     model = Costs
 
@@ -62,8 +63,6 @@ class IndexView(ListView):
             last_year_per = round(
                 (this_year_costs - last_year_costs) / last_year_costs * 100, 2)
 
-        user_archives = MyUser.objects.get(username=self.request.user)
-
         update_dict = dict(
             last_week_costs=last_week_costs,
             last_2week_costs=last_2week_costs,
@@ -76,7 +75,6 @@ class IndexView(ListView):
             last_week_per=last_week_per,
             last_season_per=last_season_per,
             last_year_per=last_year_per,
-            user_archives=user_archives,
         )
 
         context.update(update_dict)
@@ -85,7 +83,7 @@ class IndexView(ListView):
         return context
 
 
-class ChartsView(ListView):
+class ChartsView(ArchivesMixin, ListView):
     template_name = 'index_charts.html'
     model = Costs
 
@@ -95,6 +93,7 @@ class ChartsView(ListView):
 
         now = datetime.datetime.now().date()
         qs = context['object_list']
+        print(context['object_list'])
 
         last_week_data = Costs.global_compare(
             *which_week(now, -1), self.request.user, qs)
@@ -109,20 +108,28 @@ class ChartsView(ListView):
             last_week_num = yangster_no1(last_week_list)[self.request.user]
             this_year_num = yangster_no1(this_year_list)[self.request.user]
         except KeyError:
-            pass
+            last_week_num = 0
+            this_year_num = 0
         
-        user_archives = MyUser.objects.get(username=self.request.user)
-
         update_dict = dict(
-            user_archives=user_archives,
+            last_week_data=last_week_data,
+            this_season_data=this_season_data,
+            this_year_data=this_year_data,
+            last_week_list=last_week_list,
+            this_year_list=this_year_list,
+            last_week_num=last_week_num,
+            this_year_num=this_year_num,
         )
-
+        
         context.update(update_dict)
+
+        test = 10000
+        context.update({'test':test})
         # print(last_week_num)
         return context
 
 
-class FlowsView(TemplateView):
+class FlowsView(ArchivesMixin, TemplateView):
     template_name = 'index_flows.html'
     model = Costs
 

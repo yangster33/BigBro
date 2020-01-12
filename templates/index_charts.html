@@ -4,9 +4,23 @@
   <div class="col-lg-12">
     <div class="card card-navy card-outline">
       <div class="ribbon-wrapper ribbon-xl">
+        {% if last_week_num == 1 %}
         <div class="ribbon bg-warning text-lg">
-          上周节省第1名 1#
+          上周节省第{{ last_week_num }}名 {{ last_week_num }}#
         </div>
+        {% elif last_week_num == 2 %}
+        <div class="ribbon bg-purple text-lg">
+          上周节省第{{ last_week_num }}名 {{ last_week_num }}#
+        </div>
+        {% elif last_week_num == 3 %}
+        <div class="ribbon bg-primary text-lg">
+          上周节省第{{ last_week_num }}名 {{ last_week_num }}#
+        </div>
+        {% else %}
+        <div class="ribbon bg-gray text-lg">
+          上周节省第{{ last_week_num }}名 {{ last_week_num }}#
+        </div>
+        {% endif %}
       </div>
       <div class="card-body">
         <h5 class="card-title"><i class="fa fa-calendar"></i> 上周数据总览</h5>
@@ -15,9 +29,17 @@
           <div class="row">
             <div class="col-sm-3 col-6">
               <div class="description-block border-right">
-                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
-                  17%</span>
-                <h5 class="description-header">￥2577.5</h5>
+                {% if last_week_data.0 < 0 %}
+                <span class="description-percentage text-success"><i class="fas fa-caret-down"></i>
+                  {{ last_week_data.0 }}%</span>
+                {% elif last_week_data.0 > 0 %}
+                <span class="description-percentage text-danger"><i class="fas fa-caret-up"></i>
+                  {{ last_week_data.0 }}%</span>
+                {% else %}
+                <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
+                  {{ last_week_data.0 }}%</span>
+                {% endif %}
+                <h5 class="description-header">￥{{ last_week_data.1 }}</h5>
                 <span class="description-text">上周差旅费用</span>
               </div>
               <!-- /.description-block -->
@@ -25,9 +47,17 @@
             <!-- /.col -->
             <div class="col-sm-3 col-6">
               <div class="description-block border-right">
+                {% if this_season_data.0 < 0 %}
+                <span class="description-percentage text-success"><i class="fas fa-caret-down"></i>
+                  {{ this_season_data.0 }}%</span>
+                {% elif this_season_data.0 > 0 %}
+                <span class="description-percentage text-danger"><i class="fas fa-caret-up"></i>
+                  {{ this_season_data.0 }}%</span>
+                {% else %}
                 <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
-                  0%</span>
-                <h5 class="description-header">￥13358.9</h5>
+                  {{ this_season_data.0 }}%</span>
+                {% endif %}
+                <h5 class="description-header">￥{{ this_season_data.1 }}</h5>
                 <span class="description-text">本季度差旅成本</span>
               </div>
               <!-- /.description-block -->
@@ -35,9 +65,17 @@
             <!-- /.col -->
             <div class="col-sm-3 col-6">
               <div class="description-block border-right">
+                {% if this_year_data.0 < 0 %}
+                <span class="description-percentage text-success"><i class="fas fa-caret-down"></i>
+                  {{ this_year_data.0 }}%</span>
+                {% elif this_year_data.0 > 0 %}
                 <span class="description-percentage text-danger"><i class="fas fa-caret-up"></i>
-                  20%</span>
-                <h5 class="description-header">￥16123.9</h5>
+                  {{ this_year_data.0 }}%</span>
+                {% else %}
+                <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
+                  {{ this_year_data.0 }}%</span>
+                {% endif %}
+                <h5 class="description-header">￥{{ this_year_data.1 }}</h5>
                 <span class="description-text">本年差旅成本</span>
               </div>
               <!-- /.description-block -->
@@ -46,7 +84,7 @@
             <div class="col-sm-3 col-6">
               <div class="description-block">
                 <span class="description-percentage text-success"><i class="fas fa-caret-up"></i></span>
-                <h5 class="description-header">1</h5>
+                <h5 class="description-header">{{ this_year_num }}</h5>
                 <span class="description-text">年度成本节省排名</span>
               </div>
               <!-- /.description-block -->
@@ -122,10 +160,10 @@
         labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
         datasets: [
           {
-            label: '杨星楠',
-            backgroundColor: '#007bff',
-            borderColor: '#007bff',
-            data: [11000, 2000, 3000, 2500, 2700, 2500, 3000, 200, 3000, 2100, 5400, 2330]
+            "label": '杨星楠',
+            "backgroundColor": '#007bff',
+            "borderColor": '#007bff',
+            "data": [11000, 2000, 3000, 2500, 2700, 2500, 3000, 200, 3000, 2100, 5400, {{ test }}]
           },
           {
             label: '杨星楠2',

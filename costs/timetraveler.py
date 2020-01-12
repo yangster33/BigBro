@@ -1,6 +1,5 @@
 import datetime
 
-from django.contrib.auth.models import User
 
 
 def which_week(date, which_one):
@@ -37,11 +36,10 @@ def yangster_no1(mylist):
     return mydict
 
 
-def startandenddays(date, year_add, month):
-    # 输入datetime.datetime.now()返回去年month
-    last_year = int(date.replace(year=date.year+year_add).strftime('%Y'))
+def which_month(year, month):
+    # 输入 返回 月初到月底
+    date = datetime.date(year, month, 1)
     oneday = datetime.timedelta(days=1)
-    date = datetime.date(last_year, month, 1)
     if date.month == 12:
         return (date, date.replace(day=31))
     else:
@@ -71,3 +69,7 @@ def which_season(date, season_add):
         return (datetime.date(date.year, 7, 1), datetime.date(date.year, 10, 1) - oneday)
     else:
         return (datetime.date(date.year, 10, 1), datetime.date(date.year+1, 1, 1) - oneday)
+
+
+if __name__ == "__main__":
+    print(which_month(2077,2))

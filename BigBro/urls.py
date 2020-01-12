@@ -22,7 +22,7 @@ from django.views.static import serve
 from django.contrib.auth.decorators import login_required
 
 
-from user.views import MyLogin, MyLogout, TestView
+from user.views import MyLogin, MyLogout, TestView, MyPasswordChangeView
 from .settings import MEDIA_ROOT
 from costs.views import IndexView, FlowsView, ChartsView
 
@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', MyLogin.as_view(), name='login'),
     path('logout/', MyLogout.as_view(), name='logout'),
+    path('changepassword/', login_required(MyPasswordChangeView.as_view()), name='changepassword'),
     path('test/', TestView.as_view(), name='test'),
     path('index/', login_required(IndexView.as_view()), name='index'),
     path('charts/', login_required(ChartsView.as_view()), name='charts'),
