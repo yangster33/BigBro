@@ -7,6 +7,7 @@ from .models import Costs
 from .timetraveler import which_week, which_season, yangster_no1
 from user.models import MyUser
 from .middleware import ArchivesMixin
+from .chartools import chartsdumps
 
 # Create your views here.
 
@@ -93,7 +94,7 @@ class ChartsView(ArchivesMixin, ListView):
 
         now = datetime.datetime.now().date()
         qs = context['object_list']
-        print(context['object_list'])
+
 
         last_week_data = Costs.global_compare(
             *which_week(now, -1), self.request.user, qs)
@@ -111,6 +112,8 @@ class ChartsView(ArchivesMixin, ListView):
             last_week_num = 0
             this_year_num = 0
         
+        myjson = chartsdumps(Costs, MyUser, self.request.user._wrapped.username)
+
         update_dict = dict(
             last_week_data=last_week_data,
             this_season_data=this_season_data,
@@ -119,6 +122,7 @@ class ChartsView(ArchivesMixin, ListView):
             this_year_list=this_year_list,
             last_week_num=last_week_num,
             this_year_num=this_year_num,
+            myjson=myjson,
         )
         
         context.update(update_dict)

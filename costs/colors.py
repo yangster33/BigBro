@@ -18,7 +18,11 @@ def myrgb(r, g, b, nums):
     for i,color in enumerate(outputnum):
         color_hex = '#'
         for rgb in color:
-            color_hex += hex(int(rgb))[2:]
+            if len(hex(int(rgb))[2:]) == 2:
+                color_hex += hex(int(rgb))[2:]
+            else:
+                color_hex += '0'
+                color_hex += hex(int(rgb))[2:]
         outputnum[i] = color_hex
 
 
