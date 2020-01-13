@@ -113,6 +113,10 @@ class ChartsView(ArchivesMixin, ListView):
             this_year_num = 0
         
         myjson = chartsdumps(Costs, MyUser, self.request.user._wrapped.username)
+        bar_data = myjson[0]
+        doug_data = myjson[1]
+        doug_data_sea = myjson[2]
+
 
         update_dict = dict(
             last_week_data=last_week_data,
@@ -122,13 +126,14 @@ class ChartsView(ArchivesMixin, ListView):
             this_year_list=this_year_list,
             last_week_num=last_week_num,
             this_year_num=this_year_num,
-            myjson=myjson,
+            bar_data=bar_data,
+            doug_data=doug_data,
+            doug_data_sea=doug_data_sea,
         )
-        
+
         context.update(update_dict)
 
-        test = 10000
-        context.update({'test':test})
+
         # print(last_week_num)
         return context
 
