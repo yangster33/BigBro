@@ -20,24 +20,44 @@ def chartsdumps(Costs, MyUser, username):
     Q2 = [4, 5, 6]
     Q3 = [7, 8, 9]
     Q4 = [10, 11, 12]
+    json_list_index_dict = dict()
+    count = 0
+    month_count = 1
 
-    for i, user in enumerate(user_list):
-        now_costs = []
-        for month in range(1, 13):
+    for month in range(1, 13):
+        sum_query_dict = Costs.objects.values('account__username').order_by('account__username').filter(travel_date__range=(which_month(2019, month))).annotate(
+            Sum('hotel_cost'), Sum('trans_cost'),
+            Sum('local_trans_cost'), Sum('meat_cost'),
+            Sum('local_car_cost'), Sum('other_cost_1'),
+            Sum('other_cost_2'), Sum('other_cost_3')
+        )
 
-            sum_dict = Costs.objects.filter(account=user).filter(travel_date__range=(which_month(2019, month))).aggregate(
-                Sum('hotel_cost'), Sum('trans_cost'), Sum(
-                    'local_trans_cost'), Sum('meat_cost'),
-                Sum('local_car_cost'), Sum('other_cost_1'), Sum('other_cost_2'), Sum('other_cost_3'))
-            if sum_dict['hotel_cost__sum'] is None:
-                now_costs.append(0)
-            else:
-                now_costs.append(sum(sum_dict.values()))
+        if month_count != 1:
+            for item in sum_query_dict:
 
-        json_list.append(dict(label=user.username,
-                              backgroundColor=0,
-                              borderColor=0,
-                              data=now_costs))
+                now_sum = sum(list(item.values())[1:])
+
+                json_list[json_list_index_dict[item['account__username']]]['data'][month_count-1] = now_sum
+            month_count += 1
+
+        else:
+            for i, user in enumerate(user_list):
+                json_list_index_dict[user.username] = i
+                json_list.append(dict(
+                                label=user.username,
+                                backgroundColor=0,
+                                borderColor=0,
+                                data=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
+                                ))
+
+            print(json_list)
+            for item in sum_query_dict:
+                now_sum = sum(list(item.values())[1:])
+                json_list[json_list_index_dict[item['account__username']]]['data'][month_count-1] = now_sum
+                
+                month_count += 1
+
+
 
     pop_list = []
     for i, j in enumerate(json_list):
