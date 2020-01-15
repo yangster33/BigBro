@@ -3,7 +3,7 @@ from costs.models import Costs
 
 # Create your models here.
 
-class CostsFlows(models.Model):
+class WeekendCostsFlows(models.Model):
 
     name = models.CharField(verbose_name='流程名称', max_length=50)
     desc = models.CharField(verbose_name='流程描述', max_length=200)

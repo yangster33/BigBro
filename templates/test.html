@@ -1,16 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>test</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SSM | Modal Test</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.11.2/css/fontawesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/4.5.6/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../static/dist/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body>
-    {% for i in object_list %}
-    <img src="/media/{{ i.avatar.url }}">
-    {% endfor %}
+<body class="hold-transition login-page">
+<div style="width:720px;margin:7% auto">
+    <div class="content">
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            直接创建模态框1
+        </button>
+        <br>
+        <br>
+        <button class="btn btn-primary btn-lg" onclick="jsOpenModal()">
+            js打开模态框1
+        </button>
+        <br>
+        <br>
+        <button class="btn btn-primary btn-lg" onclick="jsOpenModal2()">
+            js打开模态框2
+        </button>
+        <!-- 模态框（Modal） -->
+        <!--
+        .modal，用来把 <div> 的内容识别为模态框。
+        .fade class。当模态框被切换时，它会引起内容淡入淡出。
+        aria-labelledby="myModalLabel"，该属性引用模态框的标题。
+        aria-hidden="true" 用于保持模态窗口不可见，直到触发器被触发为止
+        <div class="modal-header">，modal-header 是为模态窗口的头部定义样式的类
+        class="close"，close 是一个 CSS class，用于为模态窗口的关闭按钮设置样式。
+        data-dismiss="modal"，是一个自定义的 HTML5 data 属性。在这里它被用于关闭模态窗口。
+        class="modal-body"，是 Bootstrap CSS 的一个 CSS class，用于为模态窗口的主体设置样式。
+        class="modal-footer"，是 Bootstrap CSS 的一个 CSS class，用于为模态窗口的底部设置样式。
+        data-toggle="modal"，HTML5 自定义的 data 属性 data-toggle 用于打开模态窗口。
+        注意点弹出框外面或者esc可以直接退出弹出框
+        -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 11aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                            模态框（Modal）标题
+                        </h4>
+                        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button> -->
+                    </div>
+                    <div class="modal-body">
+                        在这里添加一些文本
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel2">
+                            模态框2
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="type" class="control-label">type:</label>
+                                <input type="text" class="form-control" id="type">
+                            </div>
+                            <div class="form-group">
+                                <label for="style" class="control-label">style:</label>
+                                <input type="text" class="form-control" id="style">
+                            </div>
+                            <div class="form-group">
+                                <label for="content" class="control-label">content:</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script src="../static/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#myModal').on('show.bs.modal',
+            function () {
+                alert('aaaa在调用 show 方法后触发。');
+            });
+        $('#myModal').on('hide.bs.modal',
+            function () {
+                alert('当调用 hide 实例方法时触发。');
+            })
+        $('#myModal').on('shown.bs.modal',
+            function () {
+                alert('当模态框对用户可见时触发（将等待 CSS 过渡效果完成）。。');
+            });
+        $('#myModal').on('hidden.bs.modal',
+            function () {
+                alert('当模态框完全对用户隐藏时触发。');
+            })
+    });
 
-    <a href="{% url 'logout' %}" class="nav-link">注销</a>
+    function jsOpenModal() {
+        $('#myModal').modal('show');//手动打开模态框。
+    }
+
+    function jsOpenModal2() {
+        $('#myModal2').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
+    }
+</script>
 </body>
 </html>
