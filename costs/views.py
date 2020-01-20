@@ -138,16 +138,27 @@ class ChartsView(ArchivesMixin, ListView):
         return context
 
 
+# class FlowsView(ArchivesMixin, TemplateView):
+#     template_name = 'index_flows.html'
+#     model = Costs
+
+#     def get(self, request, *args, **kwargs):
+#         super().get(request, *args, **kwargs)
+#         context = self.get_context_data()
+#         print(request.GET)
+#         return self.render_to_response(context)
+
+#     def post(self, request, *args, **kwargs):
+#         context = self.get_context_data()
+#         text = request.POST.get('text', None)
+
 class FlowsView(ArchivesMixin, TemplateView):
     template_name = 'index_flows.html'
     model = Costs
 
-    def get(self, request, *args, **kwargs):
-        super().get(request, *args, **kwargs)
-        context = self.get_context_data()
-        print(request.GET)
-        return self.render_to_response(context)
+    def get_context_data(self, **kargs):
 
-    def post(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        text = request.POST.get('text', None)
+        context = super().get_context_data(**kargs)
+
+        
+        return context
