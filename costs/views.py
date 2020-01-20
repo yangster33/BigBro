@@ -152,13 +152,4 @@ class ChartsView(ArchivesMixin, ListView):
 #         context = self.get_context_data()
 #         text = request.POST.get('text', None)
 
-class FlowsView(ArchivesMixin, TemplateView):
-    template_name = 'index_flows.html'
-    model = Costs
 
-    def get_context_data(self, **kargs):
-
-        context = super().get_context_data(**kargs)
-
-        
-        return context
