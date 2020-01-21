@@ -16,13 +16,8 @@ class FlowsView(ArchivesMixin, ListView):
         qs = Costs.objects.all()
         return qs.filter(account=self.request.user)
 
-
     def get_context_data(self, **kargs):
 
         context = super().get_context_data(**kargs)
 
-        print(context['page_obj'].number)
-
-
-        
         return context

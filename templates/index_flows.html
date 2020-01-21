@@ -1,48 +1,526 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index_base_sidebar.html" %}
+{% block cards %}
+{% load filter %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">代办流程</h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">
+                                #
+                            </th>
+                            <th style="width: 20%">
+                                流程名称
+                            </th>
+                            <th style="width: 20%">
+                                下一步人员
+                            </th>
+                            <th style="width: 21%">
+                                流程进度
+                            </th>
+                            <th style="width: 18%">
+                                创建日期
+                            </th>
+                            <th style="width: 20%">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                <a>
+                                    <b>周报</b>
+                                </a>
+                                <br />
+                                <small>
+                                    2019/01/15-2019/01/23
+                                </small>
+                            </td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <img alt="Avatar" class="table-avatar"
+                                            src="/media/{{ user_archives.avatar.url }}" alt="头像"><span>何鹏威</span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="project_progress">
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-volumenow="0"
+                                        aria-volumemin="0" aria-volumemax="100" style="width: 0%">
+                                    </div>
+                                </div>
+                                <small>
+                                    0/5---(0%)
+                                </small>
+                            </td>
+                            <td>
+                                <span>2019/11/12 00:00</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <button class="btn btn-info btn-sm" onclick="jsOpenModal2()">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    编辑
+                                </button>
+                            </td>
+                        </tr>
+                </table>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>flowtest</title>
-</head>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">周报</h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">
+                                日期
+                            </th>
+                            <th style="width: 10%">
+                                地点
+                            </th>
+                            <th style="width: 18%">
+                                工作内容
+                            </th>
+                            <th style="width: 8%">
+                                车船费
+                            </th>
+                            <th style="width: 8%">
+                                住宿费
+                            </th>
+                            <th style="width: 8%">
+                                打的费
+                            </th>
+                            <th style="width: 8%">
+                                餐费
+                            </th>
+                            <th style="width: 8%">
+                                租车费
+                            </th>
+                            <th style="width: 8%">
+                                合计
+                            </th>
+                            <th style="width: 10%">
+                            </th>
+                        </tr>
+                    </thead>
+                    {% for i in object_list %}
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ i.travel_date|date:"Y/m/d" }}
+                            </td>
+                            <td>
+                                {{ i.location }}
+                            </td>
+                            <td>
+                                {{ i.work|dot }}
+                            </td>
+                            <td>
+                                {{ i.trans_cost }}
+                            </td>
+                            <td>
+                                {{ i.hotel_cost }}
+                            </td>
+                            <td>
+                                {{ i.local_trans_cost }}
+                            </td>
+                            <td>
+                                {{ i.meat_cost }}
+                            </td>
+                            <td>
+                                {{ i.local_car_cost }}
+                            </td>
+                            <td>
+                                {{ i|sum }}
+                            </td>
+                            <td class="project-actions text-right">
+                                <button class="btn btn-info btn-sm" onclick="jsOpenModal2()">
+                                    <i class="fas fa-newspaper">
+                                    </i>
+                                    详情
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
 
-<body>
-    {% for i in page_obj.paginator.page_range %}
-    {{ i }}
-    {% endfor %}
-    <br />
-    {{ page_obj.index }}
-    {% for i in object_list %}
-    {{ i.account }}
-    {{ i.travel_date }}
-    <br />
-    {% endfor %}
-    {% if page_obj %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
-            {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
-            {% endif %}
-            {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.number != i %}
-            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-            {% else %}
-            <li class="page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-            {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a></li>
-            {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">下一页</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-</body>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        {% if page_obj %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number != i %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">下一页</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card-header">
+                <h5 class="modal-title" id="myModalLabel2">
+                    <b>周报流程</b>
+                    <small>
+                        (2019/01/15-2019/01/23)
+                    </small>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="type" class="control-label">日期</label>
+                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="style" class="control-label">地点</label>
+                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                    <option selected="selected">重庆</option>
+                                    <option>云阳</option>
+                                    <option>巫山</option>
+                                    <option>巫溪</option>
+                                    <option>万州</option>
+                                    <option>成都</option>
+                                    <option>北碚</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="content" class="control-label">工作内容</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">车船费</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">住宿费</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">打的费</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">餐费</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">租车费</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">其他费</label>
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                    <option selected="selected">重庆</option>
+                                    <option>云阳</option>
+                                    <option>巫山</option>
+                                    <option>巫溪</option>
+                                    <option>万州</option>
+                                    <option>成都</option>
+                                    <option>北碚</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                    <option selected="selected">重庆</option>
+                                    <option>云阳</option>
+                                    <option>巫山</option>
+                                    <option>巫溪</option>
+                                    <option>万州</option>
+                                    <option>成都</option>
+                                    <option>北碚</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                    <option selected="selected">重庆</option>
+                                    <option>云阳</option>
+                                    <option>巫山</option>
+                                    <option>巫溪</option>
+                                    <option>万州</option>
+                                    <option>成都</option>
+                                    <option>北碚</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                    <option selected="selected">重庆</option>
+                                    <option>云阳</option>
+                                    <option>巫山</option>
+                                    <option>巫溪</option>
+                                    <option>万州</option>
+                                    <option>成都</option>
+                                    <option>北碚</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="content">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <input type="reset" class="btn btn-primary"> -->
 
-</html>
+                <button type="button" class="btn btn-primary">
+                    提交更改
+                </button>
+            </div>
+            </form>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+    function jsOpenModal2() {
+        $('#myModal2').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
+    }
+</script>
+<!-- <script type='text/javascript'>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+    })
+</script> -->
+{% endblock %}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>flowtest</title>
+</head>
+
+<body>
+    {% for i in page_obj.paginator.page_range %}
+    {{ i }}
+    {% endfor %}
+    <br />
+    {{ page_obj.index }}
+    {% for i in object_list %}
+    {{ i.account }}
+    {{ i.travel_date }}
+    <br />
+    {% endfor %}
+    {% if page_obj %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
+            {% endif %}
+            {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number != i %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a></li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">下一页</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</body>
+
+</html>

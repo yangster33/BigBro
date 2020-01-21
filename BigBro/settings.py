@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'user',
     'costs',
     'flows',
+    'flows.templatetags',
 
     'import_export',
 

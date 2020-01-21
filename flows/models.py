@@ -14,8 +14,8 @@ class WeekendCostsFlows(models.Model):
     done_time = models.DateTimeField(verbose_name='完成时间')
 
     class Meta:
-        verbose_name = '周报流程'
-        verbose_name_plural = '周报流程'
+        verbose_name = '流程'
+        verbose_name_plural = '流程'
     
     def __str__(self):
         return self.name
