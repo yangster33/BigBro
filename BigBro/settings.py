@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user',
     'costs',
+    'flows',
+
     'import_export',
 
     

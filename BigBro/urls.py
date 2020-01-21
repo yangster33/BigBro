@@ -24,7 +24,8 @@ from django.contrib.auth.decorators import login_required
 
 from user.views import MyLogin, MyLogout, TestView, MyPasswordChangeView
 from .settings import MEDIA_ROOT
-from costs.views import IndexView, FlowsView, ChartsView
+from costs.views import IndexView, ChartsView
+from flows.views import FlowsView
 
 
 urlpatterns = [
