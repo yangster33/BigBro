@@ -12,12 +12,17 @@ class FlowsView(ArchivesMixin, ListView):
     model = Costs
     paginate_by = 20
 
+    def get_queryset(self):
+        qs = Costs.objects.all()
+        return qs.filter(account=self.request.user)
+
 
     def get_context_data(self, **kargs):
 
         context = super().get_context_data(**kargs)
 
-        print(context)
+        print(context['page_obj'].number)
+
 
         
         return context
