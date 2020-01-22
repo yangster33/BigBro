@@ -20,3 +20,5 @@ class WeekendCostsFlowsPilot:
             i.travel_date = temp_now
             i.save()
             temp_now += oneday
+        while temp_now == self.thisweek[0]:
+            pass

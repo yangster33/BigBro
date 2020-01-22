@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 
@@ -5,6 +7,7 @@ from django.views.generic import ListView, TemplateView
 from costs.middleware import ArchivesMixin
 from costs.models import Costs
 from .models import WeekendCostsFlows
+from costs.timetraveler import which_week
 
 
 class FlowsView(ArchivesMixin, ListView):
@@ -20,4 +23,11 @@ class FlowsView(ArchivesMixin, ListView):
 
         context = super().get_context_data(**kargs)
 
+        myflows = WeekendCostsFlows.objects.filter(
+            flow__contains=self.request.user._wrapped.username)
+        flows_costs_list = [v.costs_set.all() for v in myflows]
+        
+        context.update({"myflows":myflows})
+        context.update({"flows_costs_list":flows_costs_list})
+        print(flows_costs_list)
         return context

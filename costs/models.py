@@ -3,16 +3,18 @@ from django.db.models import Sum, Count
 
 from .timetraveler import yangster_no1, which_season, which_week
 from user.models import MyUser as User
+from flows.models import WeekendCostsFlows
 # Create your models here.
+
+
 class Costs(models.Model):
 
-    
     account = models.ForeignKey(
         User, verbose_name='账户', on_delete=models.DO_NOTHING)
     travel_date = models.DateField(verbose_name='出差日期')
     location = models.CharField(
         verbose_name='出差地点', default='重庆', max_length=30)
-    work = models.CharField(verbose_name='工作内容', max_length=100)
+    work = models.CharField(verbose_name='工作内容', max_length=100, default='缺省')
     trans_cost = models.FloatField(verbose_name='交通费', default=0)
     hotel_cost = models.FloatField(verbose_name='住宿费', default=0)
     local_trans_cost = models.FloatField(verbose_name='本地交通费', default=0)
@@ -21,6 +23,9 @@ class Costs(models.Model):
     other_cost_1 = models.FloatField(verbose_name='其他费用1', default=0)
     other_cost_2 = models.FloatField(verbose_name='其他费用2', default=0)
     other_cost_3 = models.FloatField(verbose_name='其他费用3', default=0)
+
+    flows = models.ForeignKey(
+        WeekendCostsFlows, verbose_name='流程', on_delete=models.DO_NOTHING)
 
     class Meta:
         verbose_name = '差旅成本'
@@ -34,7 +39,7 @@ class Costs(models.Model):
     @classmethod
     def sum_cost(cls, obj):
         meta = cls._meta
-        field_names = [field.name for field in meta.fields][6:]
+        field_names = [field.name for field in meta.fields][6:13]
         costs_dict = cls.objects.values(*field_names).get(pk=obj.pk)
 
         return round(sum(costs_dict.values()), 2)
@@ -81,14 +86,14 @@ class Costs(models.Model):
     def global_compare(cls, startday, enday, user_obj, qs):
 
         username_qs = qs.values(
-                'account__username').distinct().order_by('account__username')
+            'account__username').distinct().order_by('account__username')
         user_list = []
         for i in username_qs:
             user_list.append(User.objects.get(
                 username=i['account__username']))
 
         if qs.exists() and user_obj._wrapped.username in user_list:
-            
+
             costs_dict = {user: 0 for user in user_list}
             for user in costs_dict:
                 costs_dict[user] = cls.days_costs(
@@ -104,5 +109,4 @@ class Costs(models.Model):
             costs_dict = {user: 0 for user in user_list}
             return (0, 0, costs_dict)
 
-        print(username_qs)
         return (per, costs_dict[user_obj], costs_dict)

@@ -24,27 +24,30 @@ class CostsAdmin(ImportExportModelAdmin):
                     'hotel_cost', 'local_trans_cost', 'meat_cost', 'local_car_cost', 'other_cost_1', 'sum_cost')
     fieldsets = (
         ('差旅信息',
-         {'fields': ('travel_date', 'location',
+         {'fields': ('account', 'travel_date', 'location',
                      'work',)}
          ),
         ('成本明细',
          {'fields': ('trans_cost', 'hotel_cost', 'local_trans_cost',
                      'meat_cost', 'local_car_cost', 'other_cost_1')}
-         )
+         ),
+        ('流程',
+         {'fields': ('flows',)}
+         ),
     )
 
 
     list_filter = ['account']
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user._wrapped.username == 'admin':
-            return qs
-        return qs.filter(account=request.user)
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     if request.user._wrapped.username == 'admin':
+    #         return qs
+    #     return qs.filter(account=request.user)
 
-    def save_model(self, request, obj, form, change):
-        obj.account = request.user
-        return super().save_model(request, obj, form, change)
+    # def save_model(self, request, obj, form, change):
+    #     obj.account = request.user
+    #     return super().save_model(request, obj, form, change)
 
     def sum_cost(self, obj):
         return Costs.sum_cost(obj)

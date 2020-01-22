@@ -1,4 +1,9 @@
 {% extends "index_base_sidebar.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static "select2/css/select2.min.css" %}">
+<link rel="stylesheet" href="{% static "select2-bootstrap4-theme/select2-bootstrap4.min.css" %}">
+{% endblock %}
 {% block cards %}
 {% load filter %}
 <div class="row">
@@ -30,40 +35,37 @@
                             </th>
                         </tr>
                     </thead>
+                    {% if myflows %}
+                    {% for i in myflows %}
                     <tbody>
                         <tr>
                             <td>
-                                1
+                                {{ forloop.counter }}
                             </td>
                             <td>
                                 <a>
-                                    <b>周报</b>
+                                    <b>{{ i.name|slice:"22:" }}</b>
                                 </a>
                                 <br />
                                 <small>
-                                    2019/01/15-2019/01/23
+                                    {{ i.name|slice:":22" }}
                                 </small>
                             </td>
                             <td>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <img alt="Avatar" class="table-avatar"
-                                            src="/media/{{ user_archives.avatar.url }}" alt="头像"><span>何鹏威</span>
-                                    </li>
-                                </ul>
+                                <span>{{ i.flow|split:i.step }}</span>
                             </td>
                             <td class="project_progress">
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-green" role="progressbar" aria-volumenow="0"
-                                        aria-volumemin="0" aria-volumemax="100" style="width: 0%">
+                                        aria-volumemin="0" aria-volumemax="100" style="width: {{ i.flow|per:i.step }}%">
                                     </div>
                                 </div>
                                 <small>
-                                    0/5---(0%)
+                                    {{ i.flow|per2:i.step }}
                                 </small>
                             </td>
                             <td>
-                                <span>2019/11/12 00:00</span>
+                                <span>{{ i.created_time }}</span>
                             </td>
                             <td class="project-actions text-right">
                                 <button class="btn btn-info btn-sm" onclick="jsOpenModal2()">
@@ -73,6 +75,9 @@
                                 </button>
                             </td>
                         </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% endif %}
                 </table>
 
             </div>
@@ -121,6 +126,7 @@
                         </tr>
                     </thead>
                     {% for i in object_list %}
+                    {% if i.work != '缺省' %}
                     <tbody>
                         <tr>
                             <td>
@@ -159,6 +165,7 @@
                             </td>
                         </tr>
                     </tbody>
+                    {% endif %}
                     {% endfor %}
                 </table>
 
@@ -194,6 +201,8 @@
         {% endif %}
     </div>
 </div>
+{% if myflows %}
+{% for qs in flows_costs_list %}
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -207,16 +216,21 @@
             </div>
             <div class="modal-body">
                 <form role="form">
+                    {% for i in qs %}
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="type" class="control-label">日期</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="style" class="control-label">地点</label>
+                                {% endif %}
                                 <select class="form-control select2bs4" style="width: 100%;" value="重庆">
                                     <option selected="selected">重庆</option>
                                     <option>云阳</option>
@@ -230,273 +244,68 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">工作内容</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">车船费</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">住宿费</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">打的费</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">餐费</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">租车费</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
+                                {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">其他费</label>
+                                {% endif %}
                                 <input type="text" class="form-control" id="content">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
-                                    <option selected="selected">重庆</option>
-                                    <option>云阳</option>
-                                    <option>巫山</option>
-                                    <option>巫溪</option>
-                                    <option>万州</option>
-                                    <option>成都</option>
-                                    <option>北碚</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
-                                    <option selected="selected">重庆</option>
-                                    <option>云阳</option>
-                                    <option>巫山</option>
-                                    <option>巫溪</option>
-                                    <option>万州</option>
-                                    <option>成都</option>
-                                    <option>北碚</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
-                                    <option selected="selected">重庆</option>
-                                    <option>云阳</option>
-                                    <option>巫山</option>
-                                    <option>巫溪</option>
-                                    <option>万州</option>
-                                    <option>成都</option>
-                                    <option>北碚</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
-                                    <option selected="selected">重庆</option>
-                                    <option>云阳</option>
-                                    <option>巫山</option>
-                                    <option>巫溪</option>
-                                    <option>万州</option>
-                                    <option>成都</option>
-                                    <option>北碚</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="content">
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
             </div>
             <div class="modal-footer">
                 <!-- <input type="reset" class="btn btn-primary"> -->
 
                 <button type="button" class="btn btn-primary">
-                    提交更改
+                    提交流程
                 </button>
             </div>
             </form>
@@ -504,14 +313,17 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+{% endfor %}
+{% endif %}
 {% endblock %}
 {% block script %}
+<script src="{% static "select2/js/select2.full.min.js" %}"></script>
 <script type='text/javascript'>
     function jsOpenModal2() {
         $('#myModal2').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
     }
 </script>
-<!-- <script type='text/javascript'>
+<script type='text/javascript'>
     $(function () {
         //Initialize Select2 Elements
         $('.select2').select2()
@@ -522,5 +334,5 @@
         })
 
     })
-</script> -->
+</script>
 {% endblock %}
