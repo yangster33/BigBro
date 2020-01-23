@@ -208,14 +208,12 @@
         <div class="modal-content">
             <div class="card-header">
                 <h5 class="modal-title" id="myModalLabel2">
-                    <b>周报流程</b>
-                    <small>
-                        (2019/01/15-2019/01/23)
-                    </small>
+                    <b>流程</b>
                 </h5>
             </div>
             <div class="modal-body">
-                <form role="form">
+                <form role="form" method="POST">
+                    {% csrf_token %}
                     {% for i in qs %}
                     <div class="row">
                         <div class="col-sm-2">
@@ -223,7 +221,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="type" class="control-label">日期</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="2012/10/12     星期一" disabled>
+                                <input type="text" name="date{{ forloop.counter }}" class="form-control" id="type" value="{{ i.travel_date|date:"Y/m/d" }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -231,14 +229,11 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="style" class="control-label">地点</label>
                                 {% endif %}
-                                <select class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                <select name="local {{ forloop.counter }}" class="form-control select2bs4" style="width: 100%;" value="重庆">
                                     <option selected="selected">重庆</option>
-                                    <option>云阳</option>
-                                    <option>巫山</option>
-                                    <option>巫溪</option>
-                                    <option>万州</option>
-                                    <option>成都</option>
-                                    <option>北碚</option>
+                                    {% for i in locations %}
+                                    <option>{{ i }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -247,7 +242,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">工作内容</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="content">
+                                <input name="work {{ forloop.counter }}" type="text" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -255,7 +250,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">车船费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="content">
+                                <input name="trans_cost {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -304,9 +299,8 @@
             <div class="modal-footer">
                 <!-- <input type="reset" class="btn btn-primary"> -->
 
-                <button type="button" class="btn btn-primary">
-                    提交流程
-                </button>
+                <input value="提交流程" type="submit" class="btn btn-primary">
+
             </div>
             </form>
 
