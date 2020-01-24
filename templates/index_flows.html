@@ -221,7 +221,8 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="type" class="control-label">日期</label>
                                 {% endif %}
-                                <input type="text" name="date {{ forloop.counter }}" class="form-control" id="type" value="{{ i.travel_date|date:"Y-m-d" }}" readonly>
+                                <input type="text" name="date {{ forloop.counter }}" class="form-control" id="type"
+                                    value="{{ i.travel_date|date:"Y-m-d" }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -229,7 +230,8 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="style" class="control-label">地点</label>
                                 {% endif %}
-                                <select name="location {{ forloop.counter }}" class="form-control select2bs4" style="width: 100%;" value="重庆">
+                                <select name="location {{ forloop.counter }}" class="form-control select2bs4"
+                                    style="width: 100%;" value="重庆">
                                     <option selected="selected">重庆</option>
                                     {% for i in locations %}
                                     <option>{{ i }}</option>
@@ -250,7 +252,9 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">车船费</label>
                                 {% endif %}
-                                <input name="trans_cost {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
+                                <input name="trans_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -258,7 +262,9 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">住宿费</label>
                                 {% endif %}
-                                <input name="hotel_cost {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
+                                <input name="hotel_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -266,7 +272,9 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">打的费</label>
                                 {% endif %}
-                                <input name="local_trans_cost {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
+                                <input name="local_trans_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -274,7 +282,9 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">餐费</label>
                                 {% endif %}
-                                <input name="meat_cost {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
+                                <input name="meat_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -282,7 +292,9 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">租车费</label>
                                 {% endif %}
-                                <input name="local_car_cost {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
+                                <input name="local_car_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -290,7 +302,9 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">其他费</label>
                                 {% endif %}
-                                <input name="other_cost_1 {{ forloop.counter }}" type="text" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" class="form-control" id="content">
+                                <input name="other_cost_1 {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content">
                             </div>
                         </div>
                     </div>
