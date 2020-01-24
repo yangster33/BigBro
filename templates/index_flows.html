@@ -68,7 +68,7 @@
                                 <span>{{ i.created_time }}</span>
                             </td>
                             <td class="project-actions text-right">
-                                <button class="btn btn-info btn-sm" onclick="jsOpenModal2()">
+                                <button class="btn btn-info btn-sm" onclick="jsOpenModal{{ forloop.counter }}()">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     编辑
@@ -203,7 +203,7 @@
 </div>
 {% if myflows %}
 {% for qs in flows_costs_list %}
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+<div class="modal fade" id="myModal{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{ forloop.counter }}" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="card-header">
@@ -326,11 +326,15 @@
 {% endblock %}
 {% block script %}
 <script src="{% static "select2/js/select2.full.min.js" %}"></script>
+{% if myflows %}
+{% for i in myflows %}
 <script type='text/javascript'>
-    function jsOpenModal2() {
-        $('#myModal2').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
+    function jsOpenModal{{ forloop.counter }}() {
+        $('#myModal{{ forloop.counter }}').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
     }
 </script>
+{% endfor %}
+{% endif %}
 <script type='text/javascript'>
     $(function () {
         //Initialize Select2 Elements
