@@ -126,7 +126,7 @@
                         </tr>
                     </thead>
                     {% for i in object_list %}
-                    {% if i.work != '缺省' %}
+                    {% if i.flows.step == 99 %}
                     <tbody>
                         <tr>
                             <td>
