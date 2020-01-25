@@ -28,12 +28,12 @@ def split(flows,index):
 @register.filter(name='per')
 def per(flows,index):
     length = len(flows.split('-'))
-    return int(round(index/length, 0))
+    return int(round(100*index/length, 0))
 
 @register.filter(name='per2')
 def per2(flows,index):
     '''0/5---(0%)'''
     length = len(flows.split('-'))
-    return str(index)+'/'+str(length)+'---('+str(int(round(index/length, 0)))+'%)'
+    return str(index)+'/'+str(length)+'---('+str(int(round(100*index/length, 0)))+'%)'
 
 

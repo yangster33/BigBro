@@ -214,6 +214,7 @@
             <div class="modal-body">
                 <form role="form" method="POST">
                     {% csrf_token %}
+                    <input type="hidden" name="flow_id" value="{{ qs.0.flows.id }}">
                     {% for i in qs %}
                     <div class="row">
                         <div class="col-sm-2">

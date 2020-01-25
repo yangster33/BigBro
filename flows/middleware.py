@@ -1,11 +1,15 @@
+from django.shortcuts import render, redirect
+
+
 from costs.models import Costs
+
 
 class WeekendUpdateMixin:
 
     def post(self, requset, *arg, **kargs):
         qs = Costs.objects.filter(account=self.requset.user)
         update_post = self.requset.POST
-        for i in range(1,7):
+        for i in range(1, 7):
             now_qs = qs.get(travel_date=update_post['date '+str(i)])
             for m in self.model_fields:
                 set_data = update_post[m+' '+str(i)]

@@ -7,6 +7,7 @@ from django.views.generic import ListView, TemplateView
 # Create your views here.
 from costs.middleware import ArchivesMixin
 from costs.models import Costs
+from flows.models import WeekendCostsFlows
 from .models import WeekendCostsFlows
 from costs.timetraveler import which_week
 
@@ -30,7 +31,7 @@ class FlowsView(ArchivesMixin, ListView):
     model_fields = [
         'location', 'work', 'trans_cost',
         'hotel_cost', 'local_trans_cost',
-        'meat_cost', 'local_car_cost', 
+        'meat_cost', 'local_car_cost',
         'other_cost_1',
     ]
 
@@ -42,31 +43,41 @@ class FlowsView(ArchivesMixin, ListView):
 
         context = super().get_context_data(**kargs)
 
-        myflows = WeekendCostsFlows.objects.filter(
+        myflows_list = []
+        myflows = WeekendCostsFlows.objects.exclude(step=99).filter(
             flow__contains=self.request.user._wrapped.username)
-        flows_costs_list = [v.costs_set.all().reverse() for v in myflows]
-        
-        context.update({"myflows":myflows})
-        context.update({"flows_costs_list":flows_costs_list})
-        context.update({"locations":self.localtions})
-        
+        user = self.request.user._wrapped.username
+        print(myflows)
+        for flow in myflows:
+            if flow.flow.split('-')[flow.step] == user:
+                myflows_list.append(flow)
+        flows_costs_list = [v.costs_set.all().reverse() for v in myflows_list]
+        context.update({"myflows": myflows_list})
+        context.update({"flows_costs_list": flows_costs_list})
+        context.update({"locations": self.localtions})
+
         return context
 
     def post(self, requset, *arg, **kargs):
         update_post = self.request.POST
         qs = Costs.objects.filter(account=self.request.user)
-        for i in range(1,7):
-            now_qs = qs.get(travel_date=update_post['date '+str(i)])
-            for m in self.model_fields:
-                set_data = update_post[m+' '+str(i)]
-                if m[-4:] == 'cost' or m[-6:-2] == 'cost':
-                    if set_data == '':
-                        set_data = 0
-                    else:
-                        set_data = float(set_data)
-                setattr(now_qs, m, set_data)
-            now_qs.save()
-            
+        for i in range(1, 7):
+            if update_post.get('date '+str(i)) is not None:
+                now_qs = qs.get(travel_date=update_post['date '+str(i)])
+                if update_post['work '+str(i)] != '':
+                    for m in self.model_fields:
+                        set_data = update_post[m+' '+str(i)]
+                        if m[-4:] == 'cost' or m[-6:-2] == 'cost':
+                            if set_data == '':
+                                set_data = 0
+                            else:
+                                set_data = float(set_data)
+                        setattr(now_qs, m, set_data)
+                    now_qs.save()
+
+        flow_id = update_post.get('flow_id')
+        flow = WeekendCostsFlows.objects.get(pk=flow_id)
+        flow.step += 1
+        flow.save()
 
         return redirect('flows')
-
