@@ -55,7 +55,7 @@ class FlowsView(ArchivesMixin, ListView):
     def post(self, requset, *arg, **kargs):
         update_post = self.request.POST
         qs = Costs.objects.filter(account=self.request.user)
-        for i in range(1,6):
+        for i in range(1,7):
             now_qs = qs.get(travel_date=update_post['date '+str(i)])
             for m in self.model_fields:
                 set_data = update_post[m+' '+str(i)]

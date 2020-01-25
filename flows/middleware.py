@@ -16,3 +16,5 @@ class WeekendUpdateMixin:
                         set_data = float(set_data)
                 setattr(now_qs, m, set_data)
             now_qs.save()
+
+        return redirect('flows')
