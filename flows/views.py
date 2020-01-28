@@ -16,6 +16,7 @@ class FlowsView(ArchivesMixin, ListView):
     template_name = 'index_flows.html'
     model = Costs
     paginate_by = 20
+    now = datetime.datetime.now()
     localtions = [
         '涪陵', '北碚', '綦江',
         '大足', '巴南', '黔江',
@@ -82,10 +83,16 @@ class FlowsView(ArchivesMixin, ListView):
             flow = WeekendCostsFlows.objects.get(pk=flow_id)
             if flow.step + 1 < len(flow.flow.split('-')):
                 flow.step += 1
+                if flow.setp == 1:
+                    flow.done_time = self.now
             else:
                 flow.step = 99
             flow.save()
         else:
+            # date = update_post.get('date 1')
+            # now_qs = qs.get(travel_date=date)
+            # temp_flow = WeekendCostsFlows.objects.create(name=date+'temp_flow'+'or_id'+str(now_qs.flows.id)
+            #     , desc='temp_id', flow='何鹏威')
             pass
 
         return redirect(self.request.get_full_path())
