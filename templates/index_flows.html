@@ -126,7 +126,7 @@
                         </tr>
                     </thead>
                     {% for i in object_list %}
-                    {% if i.flows.step == 99 %}
+                    {% if i.flows.step == 99 or i.flows.id == 1 %}
                     <tbody>
                         <tr>
                             <td>
@@ -157,7 +157,7 @@
                                 {{ i|sum }}
                             </td>
                             <td class="project-actions text-right">
-                                <button class="btn btn-info btn-sm" onclick="jsOpenModal2()">
+                                <button class="btn btn-info btn-sm" onclick="jsOpenDetailModal{{ forloop.counter }}()">
                                     <i class="fas fa-newspaper">
                                     </i>
                                     详情
@@ -364,18 +364,129 @@
 </div>
 {% endfor %}
 {% endif %}
+{% if object_list %}
+{% for i in object_list %}
+<div class="modal fade" id="myDetailModal{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myDetailModalLabel{{ forloop.counter }}" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card-header">
+                <h5 class="modal-title" id="myModalLabel2">
+                    <b>流程</b>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="temp_flow" value="ture">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="type" class="control-label">日期</label>
+                                <input type="text" name="date {{ forloop.counter }}" class="form-control" id="type"
+                                    value="{{ i.travel_date|date:"Y-m-d" }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="style" class="control-label">地点</label>
+                                <select name="location {{ forloop.counter }}" class="form-control select2bs4"
+                                    style="width: 100%;" value="{{ i.location }}">
+                                    <option selected="selected">重庆</option>
+                                    {% for i in locations %}
+                                    <option>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="content" class="control-label">工作内容</label>
+                                <input name="work {{ forloop.counter }}" type="text" class="form-control" id="content" value="{{ i.work }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">车船费</label>
+                                <input name="trans_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content" value="{{ i.trans_cost }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">住宿费</label>
+                                <input name="hotel_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content" value="{{ i.hotel_cost }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">打的费</label>
+                                <input name="local_trans_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content" value="{{ i.local_trans_cost }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">餐费</label>
+                                <input name="meat_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content" value="{{ i.meat_cost }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">租车费</label>
+                                <input name="local_car_cost {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content" value="{{ i.local_car_cost }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="content" class="control-label">其他费</label>
+                                <input name="other_cost_1 {{ forloop.counter }}" type="text"
+                                    onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                    class="form-control" id="content" value="{{ i.other_cost_1 }}">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <input type="reset" class="btn btn-primary"> -->
+
+                <input value="提交流程" type="submit" class="btn btn-primary">
+
+            </div>
+            </form>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+{% endfor %}
+{% endif %}
 {% endblock %}
 {% block script %}
 <script src="{% static "select2/js/select2.full.min.js" %}"></script>
-{% if myflows %}
-{% for i in myflows %}
+
 <script type='text/javascript'>
+    {% if myflows %}
+    {% for i in myflows %}
     function jsOpenModal{{ forloop.counter }}() {
         $('#myModal{{ forloop.counter }}').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
     }
+    {% endfor %}
+    {% endif %}
+
+    {% for i in object_list %}
+    function jsOpenDetailModal{{ forloop.counter }}() {
+        $('#myDetailModal{{ forloop.counter }}').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
+    }
+    {% endfor %}
 </script>
-{% endfor %}
-{% endif %}
+
 <script type='text/javascript'>
     $(function () {
         //Initialize Select2 Elements
