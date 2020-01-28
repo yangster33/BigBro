@@ -215,6 +215,9 @@
                 <form role="form" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="flow_id" value="{{ qs.0.flows.id }}">
+                    {% if qs.0.flows.step == 0 %}
+                    <input type="hidden" name="flow_commit" value="{{ qs.0.flows.step }}">
+                    {% endif %}
                     {% for i in qs %}
                     <div class="row">
                         <div class="col-sm-2">
@@ -222,8 +225,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="type" class="control-label">日期</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input type="text" name="date {{ forloop.counter }}" class="form-control" id="type"
                                     value="{{ i.travel_date|date:"Y-m-d" }}" readonly>
+                                {% else %}
+                                <input type="text" name="date {{ forloop.counter }}" class="form-control" id="type"
+                                    value="{{ i.travel_date|date:"Y-m-d" }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -231,12 +239,16 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="style" class="control-label">地点</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <select name="location {{ forloop.counter }}" class="form-control select2bs4"
                                     style="width: 100%;" value="重庆">
                                     <option selected="selected">重庆</option>
                                     {% for i in locations %}
                                     <option>{{ i }}</option>
                                     {% endfor %}
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.location }}" disabled>
+                                {% endif %}
                                 </select>
                             </div>
                         </div>
@@ -245,7 +257,11 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">工作内容</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="work {{ forloop.counter }}" type="text" class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.work }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -253,9 +269,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">车船费</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="trans_cost {{ forloop.counter }}" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.trans_cost }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -263,9 +283,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">住宿费</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="hotel_cost {{ forloop.counter }}" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.hotel_cost }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -273,9 +297,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">打的费</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="local_trans_cost {{ forloop.counter }}" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.local_trans_cost }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -283,9 +311,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">餐费</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="meat_cost {{ forloop.counter }}" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.meat_cost }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -293,9 +325,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">租车费</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="local_car_cost {{ forloop.counter }}" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.local_car_cost }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -303,9 +339,13 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">其他费</label>
                                 {% endif %}
+                                {% if i.flows.step == 0 %}
                                 <input name="other_cost_1 {{ forloop.counter }}" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content">
+                                {% else %}
+                                <input type="text" class="form-control" id="type" value="{{ i.other_cost_1 }}" disabled>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

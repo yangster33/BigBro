@@ -47,7 +47,7 @@ class FlowsView(ArchivesMixin, ListView):
         myflows = WeekendCostsFlows.objects.exclude(step=99).filter(
             flow__contains=self.request.user._wrapped.username)
         user = self.request.user._wrapped.username
-        print(myflows)
+        
         for flow in myflows:
             if flow.flow.split('-')[flow.step] == user:
                 myflows_list.append(flow)
@@ -61,23 +61,27 @@ class FlowsView(ArchivesMixin, ListView):
     def post(self, requset, *arg, **kargs):
         update_post = self.request.POST
         qs = Costs.objects.filter(account=self.request.user)
-        for i in range(1, 7):
-            if update_post.get('date '+str(i)) is not None:
-                now_qs = qs.get(travel_date=update_post['date '+str(i)])
-                if update_post['work '+str(i)] != '':
-                    for m in self.model_fields:
-                        set_data = update_post[m+' '+str(i)]
-                        if m[-4:] == 'cost' or m[-6:-2] == 'cost':
-                            if set_data == '':
-                                set_data = 0
-                            else:
-                                set_data = float(set_data)
-                        setattr(now_qs, m, set_data)
-                    now_qs.save()
+        if update_post.get('flow_commit') is None:
+            for i in range(1, 7):
+                if update_post.get('date '+str(i)) is not None:
+                    now_qs = qs.get(travel_date=update_post['date '+str(i)])
+                    if update_post['work '+str(i)] != '':
+                        for m in self.model_fields:
+                            set_data = update_post[m+' '+str(i)]
+                            if m[-4:] == 'cost' or m[-6:-2] == 'cost':
+                                if set_data == '':
+                                    set_data = 0
+                                else:
+                                    set_data = float(set_data)
+                            setattr(now_qs, m, set_data)
+                        now_qs.save()
 
         flow_id = update_post.get('flow_id')
         flow = WeekendCostsFlows.objects.get(pk=flow_id)
-        flow.step += 1
+        if flow.step + 1 < len(flow.flow.split('-')):
+            flow.step += 1
+        else:
+            flow.step = 99
         flow.save()
 
         return redirect('flows')
