@@ -382,14 +382,14 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="type" class="control-label">日期</label>
-                                <input type="text" name="date {{ forloop.counter }}" class="form-control" id="type"
+                                <input type="text" name="date" class="form-control" id="type"
                                     value="{{ i.travel_date|date:"Y-m-d" }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="style" class="control-label">地点</label>
-                                <select name="location {{ forloop.counter }}" class="form-control select2bs4"
+                                <select name="location" class="form-control select2bs4"
                                     style="width: 100%;" value="{{ i.location }}">
                                     <option selected="selected">重庆</option>
                                     {% for i in locations %}
@@ -401,13 +401,13 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="content" class="control-label">工作内容</label>
-                                <input name="work {{ forloop.counter }}" type="text" class="form-control" id="content" value="{{ i.work }}">
+                                <input name="work" type="text" class="form-control" id="content" value="{{ i.work }}">
                             </div>
                         </div>
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="content" class="control-label">车船费</label>
-                                <input name="trans_cost {{ forloop.counter }}" type="text"
+                                <input name="trans_cost" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content" value="{{ i.trans_cost }}">
                             </div>
@@ -415,7 +415,7 @@
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="content" class="control-label">住宿费</label>
-                                <input name="hotel_cost {{ forloop.counter }}" type="text"
+                                <input name="hotel_cost" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content" value="{{ i.hotel_cost }}">
                             </div>
@@ -423,7 +423,7 @@
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="content" class="control-label">打的费</label>
-                                <input name="local_trans_cost {{ forloop.counter }}" type="text"
+                                <input name="local_trans_cost" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content" value="{{ i.local_trans_cost }}">
                             </div>
@@ -431,7 +431,7 @@
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="content" class="control-label">餐费</label>
-                                <input name="meat_cost {{ forloop.counter }}" type="text"
+                                <input name="meat_cost" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content" value="{{ i.meat_cost }}">
                             </div>
@@ -439,7 +439,7 @@
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="content" class="control-label">租车费</label>
-                                <input name="local_car_cost {{ forloop.counter }}" type="text"
+                                <input name="local_car_cost" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content" value="{{ i.local_car_cost }}">
                             </div>
@@ -447,7 +447,7 @@
                         <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="content" class="control-label">其他费</label>
-                                <input name="other_cost_1 {{ forloop.counter }}" type="text"
+                                <input name="other_cost_1" type="text"
                                     onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
                                     class="form-control" id="content" value="{{ i.other_cost_1 }}">
                             </div>

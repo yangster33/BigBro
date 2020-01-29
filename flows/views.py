@@ -10,6 +10,7 @@ from costs.models import Costs
 from flows.models import WeekendCostsFlows
 from .models import WeekendCostsFlows
 from costs.timetraveler import which_week
+from .middleware import TempFlowsCreater
 
 
 class FlowsView(ArchivesMixin, ListView):
@@ -48,7 +49,7 @@ class FlowsView(ArchivesMixin, ListView):
         myflows = WeekendCostsFlows.objects.exclude(step=99).filter(
             flow__contains=self.request.user._wrapped.username)
         user = self.request.user._wrapped.username
-        
+
         for flow in myflows:
             if flow.flow.split('-')[flow.step] == user:
                 myflows_list.append(flow)
@@ -67,7 +68,8 @@ class FlowsView(ArchivesMixin, ListView):
             if update_post.get('flow_commit') is None:
                 for i in range(1, 7):
                     if update_post.get('date '+str(i)) is not None:
-                        now_qs = qs.get(travel_date=update_post['date '+str(i)])
+                        now_qs = qs.get(
+                            travel_date=update_post['date '+str(i)])
                         if update_post['work '+str(i)] != '':
                             for m in self.model_fields:
                                 set_data = update_post[m+' '+str(i)]
@@ -89,10 +91,13 @@ class FlowsView(ArchivesMixin, ListView):
                 flow.step = 99
             flow.save()
         else:
-            # date = update_post.get('date 1')
-            # now_qs = qs.get(travel_date=date)
-            # temp_flow = WeekendCostsFlows.objects.create(name=date+'temp_flow'+'or_id'+str(now_qs.flows.id)
-            #     , desc='temp_id', flow='何鹏威')
-            pass
+            username = self.request.user._wrapped.username
+            tempname = str(datetime.datetime.now()) + username + Costs.__name__ + '修改流程'
+            flows = username + '-' + '何鹏威' + '-' + username
+            step = 1
+            model = Costs.__name__
+            data = update_post
+
+            TempFlowsCreater(username, tempname, model, data, flows, step)
 
         return redirect(self.request.get_full_path())

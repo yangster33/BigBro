@@ -25,15 +25,15 @@ import datetime
 #         return redirect('flows')
 
 
-def TempFlowsCreater(username, model, data, flows, step=0):
-    now = datetime.datetime.now()
+def TempFlowsCreater(username, name, model, data, flows, step=0):
+
     done_time = datetime.datetime(year=1900, month=1, day=1)
     TempFlows.objects.create(
-        name = now+model.__name__+username,
-        desc = 'tempflow',
-        model = model.__name__,
-        data = data,
-        flow = flows,
-        step = step,
-        done_time = done_time,
+        name=name,
+        desc='tempflow',
+        model=model.__name__,
+        data=data,
+        flow=flows,
+        step=step,
+        done_time=done_time,
     )
