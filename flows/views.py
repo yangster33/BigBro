@@ -57,17 +57,17 @@ class FlowsView(ArchivesMixin, ListView):
 
         mytempflows = TempFlows.objects.exclude(step=99).filter(
             flow__contains=username)
-        mytempflows_list = []
+
+
 
         for i in mytempflows:
-            mytempflows_list.append(i)
-        print(type(eval(mytempflows_list[0].data)))
-
+            myflows_list.append(i)
+            flows_costs_list.append(eval(i.data))
+        print(flows_costs_list)
 
 
         context.update({"myflows": myflows_list})
         context.update({"flows_costs_list": flows_costs_list})
-        context.update({"mytempflows": mytempflows_list})
         context.update({"locations": self.localtions})
 
         return context

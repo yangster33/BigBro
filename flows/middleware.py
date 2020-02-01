@@ -33,10 +33,15 @@ def TempFlowsCreater(username, name, model, data, flows, step=0):
         data.pop('csrfmiddlewaretoken')
     if data.get('temp_flow'):
         data.pop('temp_flow')
+
+    if model.__name__ == 'Costs':
+        modelname = '差旅'
+    else:
+        modelname = model.__name__
     TempFlows.objects.create(
         name=name,
         desc='tempflow',
-        model=model.__name__,
+        model=modelname,
         data=data,
         flow=flows,
         step=step,
