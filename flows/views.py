@@ -8,7 +8,7 @@ from django.views.generic import ListView, TemplateView
 from costs.middleware import ArchivesMixin
 from costs.models import Costs
 from flows.models import WeekendCostsFlows
-from .models import WeekendCostsFlows
+from .models import WeekendCostsFlows, TempFlows
 from costs.timetraveler import which_week
 from .middleware import TempFlowsCreater
 
@@ -46,17 +46,28 @@ class FlowsView(ArchivesMixin, ListView):
         context = super().get_context_data(**kargs)
 
         myflows_list = []
+        username = self.request.user._wrapped.username
         myflows = WeekendCostsFlows.objects.exclude(step=99).filter(
-            flow__contains=self.request.user._wrapped.username)
-        user = self.request.user._wrapped.username
+            flow__contains=username)
 
         for flow in myflows:
-            if flow.flow.split('-')[flow.step] == user:
+            if flow.flow.split('-')[flow.step] == username:
                 myflows_list.append(flow)
         flows_costs_list = [v.costs_set.all().reverse() for v in myflows_list]
 
+        mytempflows = TempFlows.objects.exclude(step=99).filter(
+            flow__contains=username)
+        mytempflows_list = []
+
+        for i in mytempflows:
+            mytempflows_list.append(i)
+        print(type(eval(mytempflows_list[0].data)))
+
+
+
         context.update({"myflows": myflows_list})
         context.update({"flows_costs_list": flows_costs_list})
+        context.update({"mytempflows": mytempflows_list})
         context.update({"locations": self.localtions})
 
         return context
@@ -95,7 +106,7 @@ class FlowsView(ArchivesMixin, ListView):
             tempname = str(datetime.datetime.now()) + username + Costs.__name__ + '修改流程'
             flows = username + '-' + '何鹏威' + '-' + username
             step = 1
-            model = Costs.__name__
+            model = Costs
             data = update_post
 
             TempFlowsCreater(username, tempname, model, data, flows, step)

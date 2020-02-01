@@ -378,6 +378,7 @@
                 <form role="form" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="temp_flow" value="ture">
+                    <input type="hidden" name="id" value="{{ i.id }}">
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group">

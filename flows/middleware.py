@@ -28,6 +28,11 @@ import datetime
 def TempFlowsCreater(username, name, model, data, flows, step=0):
 
     done_time = datetime.datetime(year=1900, month=1, day=1)
+    data=data.dict()
+    if data.get('csrfmiddlewaretoken'):
+        data.pop('csrfmiddlewaretoken')
+    if data.get('temp_flow'):
+        data.pop('temp_flow')
     TempFlows.objects.create(
         name=name,
         desc='tempflow',
