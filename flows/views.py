@@ -63,7 +63,7 @@ class FlowsView(ArchivesMixin, ListView):
         for i in mytempflows:
             myflows_list.append(i)
             flows_costs_list.append(eval(i.data))
-        print(flows_costs_list)
+        # print(flows_costs_list)
 
 
         context.update({"myflows": myflows_list})
@@ -75,40 +75,41 @@ class FlowsView(ArchivesMixin, ListView):
     def post(self, requset, *arg, **kargs):
         update_post = self.request.POST
         qs = Costs.objects.filter(account=self.request.user)
-        if update_post.get('temp_flow') is None:
-            if update_post.get('flow_commit') is None:
-                for i in range(1, 7):
-                    if update_post.get('date '+str(i)) is not None:
-                        now_qs = qs.get(
-                            travel_date=update_post['date '+str(i)])
-                        if update_post['work '+str(i)] != '':
-                            for m in self.model_fields:
-                                set_data = update_post[m+' '+str(i)]
-                                if m[-4:] == 'cost' or m[-6:-2] == 'cost':
-                                    if set_data == '':
-                                        set_data = 0
-                                    else:
-                                        set_data = float(set_data)
-                                setattr(now_qs, m, set_data)
-                            now_qs.save()
+        print(update_post)
+        # if update_post.get('temp_flow') is None:
+        #     if update_post.get('flow_commit') is None:
+        #         for i in range(1, 7):
+        #             if update_post.get('date '+str(i)) is not None:
+        #                 now_qs = qs.get(
+        #                     travel_date=update_post['date '+str(i)])
+        #                 if update_post['work '+str(i)] != '':
+        #                     for m in self.model_fields:
+        #                         set_data = update_post[m+' '+str(i)]
+        #                         if m[-4:] == 'cost' or m[-6:-2] == 'cost':
+        #                             if set_data == '':
+        #                                 set_data = 0
+        #                             else:
+        #                                 set_data = float(set_data)
+        #                         setattr(now_qs, m, set_data)
+        #                     now_qs.save()
 
-            flow_id = update_post.get('flow_id')
-            flow = WeekendCostsFlows.objects.get(pk=flow_id)
-            if flow.step + 1 < len(flow.flow.split('-')):
-                flow.step += 1
-                if flow.setp == 1:
-                    flow.done_time = self.now
-            else:
-                flow.step = 99
-            flow.save()
-        else:
-            username = self.request.user._wrapped.username
-            tempname = str(datetime.datetime.now()) + username + Costs.__name__ + '修改流程'
-            flows = username + '-' + '何鹏威' + '-' + username
-            step = 1
-            model = Costs
-            data = update_post
+        #     flow_id = update_post.get('flow_id')
+        #     flow = WeekendCostsFlows.objects.get(pk=flow_id)
+        #     if flow.step + 1 < len(flow.flow.split('-')):
+        #         flow.step += 1
+        #         if flow.setp == 1:
+        #             flow.done_time = self.now
+        #     else:
+        #         flow.step = 99
+        #     flow.save()
+        # else:
+        #     username = self.request.user._wrapped.username
+        #     tempname = str(datetime.datetime.now()) + username + Costs.__name__ + '修改流程'
+        #     flows = username + '-' + '何鹏威' + '-' + username
+        #     step = 1
+        #     model = Costs
+        #     data = update_post
 
-            TempFlowsCreater(username, tempname, model, data, flows, step)
+        #     TempFlowsCreater(username, tempname, model, data, flows, step)
 
         return redirect(self.request.get_full_path())
