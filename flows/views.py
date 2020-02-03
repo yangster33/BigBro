@@ -63,6 +63,7 @@ class FlowsView(ArchivesMixin, ListView):
                 myflows_list.append(i)
                 temp_dict = eval(i.data)
                 temp_dict['flow_id'] = i.id
+                temp_dict['step'] = i.step
                 flows_costs_list.append(temp_dict)
         # print(flows_costs_list)
 
@@ -102,18 +103,26 @@ class FlowsView(ArchivesMixin, ListView):
                 flow.step = 99
             flow.save()
         elif update_post.get('temp_flow') == 'going':
-            print('----------------'*10)
+            print(update_post)
             print(int(update_post.get('flow_id')))
             temp_flow = TempFlows.objects.get(pk=int(update_post.get('flow_id')))
-            print('++++++++++++++++'*10)
             if update_post.get('return'):
                 temp_flow.step -= 1
+                temp_flow.save()
+            elif update_post.get('delete'):
+                temp_flow.delete()
+            elif update_post.get('init'):
+                temp_flow.step = 0
+                temp_flow.save()
             else:
-                temp_flow.step += 1
-            temp_flow.save()
+                if len(temp_flow.flow.split('-')) == temp_flow.step + 1:
+                    temp_flow.delete()
+                else:
+                    temp_flow.step += 1
+                    temp_flow.save()
         else:
             username = self.request.user._wrapped.username
-            tempname = str(datetime.datetime.now()) + username + Costs.__name__ + '修改流程'
+            tempname = update_post['date'] + username + Costs.__name__ + '修改流程'
             flows = username + '-' + '何鹏威' + '-' + username
             step = 1
             model = Costs

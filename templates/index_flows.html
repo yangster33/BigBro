@@ -36,8 +36,8 @@
                             </th>
                         </tr>
                     </thead>
-                    {% for i in myflows %}
                     <tbody>
+                        {% for i in myflows %}
                         <tr>
                             <td>
                                 {{ forloop.counter }}
@@ -85,8 +85,8 @@
                                 </button>
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
-                    {% endfor %}
                     {% endif %}
                 </table>
 
@@ -135,9 +135,9 @@
                             </th>
                         </tr>
                     </thead>
-                    {% for i in object_list %}
-                    {% if i.flows.step == 99 or i.flows.id == 1 %}
                     <tbody>
+                        {% for i in object_list %}
+                        {% if i.flows.step == 99 or i.flows.id == 1 %}
                         <tr>
                             <td>
                                 {{ i.travel_date|date:"Y/m/d" }}
@@ -174,9 +174,9 @@
                                 </button>
                             </td>
                         </tr>
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
-                    {% endif %}
-                    {% endfor %}
                 </table>
 
             </div>
@@ -443,10 +443,13 @@
             </div>
             <div class="modal-footer">
                 <!-- <input type="reset" class="btn btn-primary"> -->
-                {% if qs.step != 0 or qs.0.step != 0 %}
-                <input value="退回流程" name="return" type="submit" class="btn btn-danger">
+                {% if qs.step is not None %}
+                {% if qs.step != 0 %}
+                <input value="退到最初" name="init" type="submit" class="btn btn-danger">
+                <input value="退回流程" name="return" type="submit" class="btn btn-warning">
                 {% elif qs.step == 0 %}
                 <input value="删除流程" name="delete" type="submit" class="btn btn-danger">
+                {% endif %}
                 {% endif %}
                 <input value="同意流程" type="submit" class="btn btn-primary">
 
