@@ -45,7 +45,7 @@
                             <td>
                                 {% if i.model %}
                                 <a>
-                                    <b>{{ i.name|slice:"26:" }}</b>
+                                    <b>{{ i.name|slice:"10:" }}</b>
                                 </a>
                                 <br />
                                 <small>
@@ -371,7 +371,7 @@
                                 <label for="type" class="control-label">日期</label>
                                 {% endif %}
                                 <input type="text" name="date" class="form-control" id="type"
-                                    value="{{ qs.date }}" disabled>
+                                    value="{{ qs.date }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -379,7 +379,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="style" class="control-label">地点</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.location }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.location }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -387,7 +387,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">工作内容</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.work }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.work }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -395,7 +395,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">车船费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.trans_cost }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.trans_cost }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -403,7 +403,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">住宿费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.hotel_cost }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.hotel_cost }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -411,7 +411,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">打的费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.local_trans_cost }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.local_trans_cost }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -419,7 +419,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">餐费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.meat_cost }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.meat_cost }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -427,7 +427,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">租车费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.local_car_cost }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.local_car_cost }}" readonly>
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -435,7 +435,7 @@
                                 {% if forloop.counter == 1 %}
                                 <label for="content" class="control-label">其他费</label>
                                 {% endif %}
-                                <input type="text" class="form-control" id="type" value="{{ qs.other_cost_1 }}" disabled>
+                                <input type="text" class="form-control" id="type" value="{{ qs.other_cost_1 }}" readonly>
                             </div>
                         </div>
                     </div>

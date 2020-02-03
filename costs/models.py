@@ -9,8 +9,19 @@ from flows.models import WeekendCostsFlows
 
 class Costs(models.Model):
 
+    STATUS_OK = 0
+    STATUS_CHANGING = 1
+    STATUS_DEL = 2
+    STATUS_ITEM = (
+        (STATUS_OK, '正常'),
+        (STATUS_CHANGING, '修改中'),
+        (STATUS_DEL, '删除中'),
+    )
+
     account = models.ForeignKey(
         User, verbose_name='账户', on_delete=models.DO_NOTHING)
+    status = models.PositiveIntegerField(
+        verbose_name='状态', choices=STATUS_ITEM, default=STATUS_OK)
     travel_date = models.DateField(verbose_name='出差日期')
     location = models.CharField(
         verbose_name='出差地点', default='重庆', max_length=30)
