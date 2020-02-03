@@ -10,7 +10,7 @@ from costs.models import Costs
 from flows.models import WeekendCostsFlows
 from .models import WeekendCostsFlows, TempFlows
 from costs.timetraveler import which_week
-from .middleware import TempFlowsCreater
+from .middleware import TempFlowsCreater, CostUpdater
 
 
 class FlowsView(ArchivesMixin, ListView):
@@ -104,7 +104,7 @@ class FlowsView(ArchivesMixin, ListView):
             flow.save()
         elif update_post.get('temp_flow') == 'going':
             print(update_post)
-            print(int(update_post.get('flow_id')))
+            # print(int(update_post.get('flow_id')))
             temp_flow = TempFlows.objects.get(pk=int(update_post.get('flow_id')))
             if update_post.get('return'):
                 temp_flow.step -= 1
@@ -112,7 +112,7 @@ class FlowsView(ArchivesMixin, ListView):
             elif update_post.get('delete'):
                 temp_flow.delete()
                 flow_cost = Costs.objects.filter(account=self.request.user).get(travel_date=update_post['date'])
-                flow_cost.step = 99
+                flow_cost.status = 0
                 flow_cost.save()
             elif update_post.get('init'):
                 temp_flow.step = 0
@@ -120,6 +120,7 @@ class FlowsView(ArchivesMixin, ListView):
             else:
                 if len(temp_flow.flow.split('-')) == temp_flow.step + 1:
                     temp_flow.delete()
+                    CostUpdater(self.request.user, update_post.get('date'), update_post)
                 else:
                     temp_flow.step += 1
                     temp_flow.save()
@@ -134,7 +135,7 @@ class FlowsView(ArchivesMixin, ListView):
             TempFlowsCreater(username, tempname, model, data, flows, step)
 
             flow_cost = Costs.objects.filter(account=self.request.user).get(travel_date=update_post['date'])
-            flow_cost.step = 80
+            flow_cost.status = 1
             flow_cost.save()
 
         return redirect(self.request.get_full_path())

@@ -47,3 +47,18 @@ def TempFlowsCreater(username, name, model, data, flows, step=0):
         step=step,
         done_time=done_time,
     )
+
+def CostUpdater(user, date, data):
+    cost = Costs.objects.filter(account=user).get(travel_date=date)
+    update_list = [
+        'location', 'work', 'trans_cost',
+        'hotel_cost', 'local_trans_cost', 
+        'meat_cost', 'local_car_cost', 
+        'other_cost_1', 'sum_cost'
+    ]
+    for i in update_list:
+        if data.get(i):
+            setattr(cost, i, data.get(i))
+    
+    cost.status = 0
+    cost.save()

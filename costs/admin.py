@@ -20,11 +20,11 @@ class CostsAdmin(ImportExportModelAdmin):
 
     resource_class = CostResource
     form = CostsAdminForm
-    list_display = ('account', 'travel_date', 'location', 'work', 'trans_cost',
+    list_display = ('account', 'status', 'travel_date', 'location', 'work', 'trans_cost',
                     'hotel_cost', 'local_trans_cost', 'meat_cost', 'local_car_cost', 'other_cost_1', 'sum_cost')
     fieldsets = (
         ('差旅信息',
-         {'fields': ('account', 'travel_date', 'location',
+         {'fields': ('account', 'status', 'travel_date', 'location',
                      'work',)}
          ),
         ('成本明细',
