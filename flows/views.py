@@ -104,8 +104,8 @@ class FlowsView(ArchivesMixin, ListView):
             flow.save()
         elif update_post.get('temp_flow') == 'going':
             print(update_post)
-            # print(int(update_post.get('flow_id')))
             temp_flow = TempFlows.objects.get(pk=int(update_post.get('flow_id')))
+            print(temp_flow.data)
             if update_post.get('return'):
                 temp_flow.step -= 1
                 temp_flow.save()

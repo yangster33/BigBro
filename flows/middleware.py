@@ -59,6 +59,6 @@ def CostUpdater(user, date, data):
     for i in update_list:
         if data.get(i):
             setattr(cost, i, data.get(i))
-    
+    print(cost.id)
     cost.status = 0
     cost.save()
