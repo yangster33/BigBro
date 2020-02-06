@@ -1,25 +1,951 @@
-<div class="dropdown">
+<!DOCTYPE html>
+<html>
 
-        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"> 选择您的职位
-    
-            <span class="caret"></span>
-    
-        </button>
-    
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    
-            <li role="presentation">
-    
-                <a role="menuitem" tabindex="-1" href="#">测试工程师</a>
-    
-            </li>
-    
-            <li role="presentation">
-    
-                <a role="menuitem" tabindex="-1" href="#">开发工程师</a>
-    
-            </li>
-    
-        </ul>
-    
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>欢迎使用老大哥系统|何鹏威</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../static/fontawesome-free-5.11.2-web/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="../static/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../static/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="../static/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../static/dist/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../static/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../static/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../static/summernote/summernote-bs4.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="../static/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../static/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse layout-navbar-fixed layout-fixed">
+    <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">周报</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped projects">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10%">
+                                                    日期
+                                                </th>
+                                                <th style="width: 10%">
+                                                    地点
+                                                </th>
+                                                <th style="width: 18%">
+                                                    工作内容
+                                                </th>
+                                                <th style="width: 8%">
+                                                    车船费
+                                                </th>
+                                                <th style="width: 8%">
+                                                    住宿费
+                                                </th>
+                                                <th style="width: 8%">
+                                                    打的费
+                                                </th>
+                                                <th style="width: 8%">
+                                                    餐费
+                                                </th>
+                                                <th style="width: 8%">
+                                                    租车费
+                                                </th>
+                                                <th style="width: 8%">
+                                                    合计
+                                                </th>
+                                                <th style="width: 10%">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    2019/12/28
+                                                </td>
+                                                <td>
+                                                    涪陵
+                                                </td>
+                                                <td>
+                                                    完成祥云流程 哈哈骗你的...
+                                                </td>
+                                                <td>
+                                                    0.0
+                                                </td>
+                                                <td>
+                                                    0.0
+                                                </td>
+                                                <td>
+                                                    110.0
+                                                </td>
+                                                <td>
+                                                    20.0
+                                                </td>
+                                                <td>
+                                                    10.0
+                                                </td>
+                                                <td>
+                                                    140.0
+                                                </td>
+                                                <td class="project-actions text-right">
+                                                    <button class="btn btn-info btn-sm" onclick="jsOpenDetailModal1()">
+                                                        <i class="fas fa-newspaper">
+                                                        </i>
+                                                        详情
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myDetailModal1" tabindex="-1" role="dialog"
+                        aria-labelledby="myDetailModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="card-header">
+                                    <h1 class="card-title">
+                                        Flows
+                                    </h1>
+                                    <div class="card-tools">
+                                        <input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                                        <button type="button" id="export" class="btn btn-sm btn-secondary">导出模板</button>
+                                        <a type="button" id="import" href="javascript:selectFile()" class="btn btn-sm btn-secondary">模板导入</a>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" method="POST">
+                                        <input type="hidden" name="csrfmiddlewaretoken"
+                                            value="uVvu6Urv2uEI6kdkp3lPspoVPYh6uHwSp0HolQPeR6Ytb0jPQnt4ybiACGY9ozDr">
+                                        <input type="hidden" name="temp_flow" value="ture">
+                                        <input type="hidden" name="id" value="4">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label for="type" class="control-label">日期</label>
+                                                    <input type="text" name="date" class="form-control" id="type"
+                                                        value="2019-12-28" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="style" class="control-label">地点</label>
+                                                    <select name="location" class="form-control select2bs4"
+                                                        style="width: 100%;" value="涪陵">
+                                                        <option selected="selected">涪陵</option>
+                                                        <option>涪陵</option>
+                                                        <option>北碚</option>
+                                                        <option>綦江</option>
+                                                        <option>大足</option>
+                                                        <option>巴南</option>
+                                                        <option>黔江</option>
+                                                        <option>长寿</option>
+                                                        <option>江津</option>
+                                                        <option>合川</option>
+                                                        <option>永川</option>
+                                                        <option>南川</option>
+                                                        <option>壁山</option>
+                                                        <option>铜梁</option>
+                                                        <option>潼南</option>
+                                                        <option>荣昌</option>
+                                                        <option>开州</option>
+                                                        <option>梁平</option>
+                                                        <option>武隆</option>
+                                                        <option>城口</option>
+                                                        <option>丰都</option>
+                                                        <option>垫江</option>
+                                                        <option>忠县</option>
+                                                        <option>云阳</option>
+                                                        <option>奉节</option>
+                                                        <option>巫山</option>
+                                                        <option>巫溪</option>
+                                                        <option>石柱</option>
+                                                        <option>秀山</option>
+                                                        <option>酉阳</option>
+                                                        <option>彭水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">工作内容</label>
+                                                    <input name="work" type="text" class="form-control" id="content"
+                                                        value="完成祥云流程 哈哈骗你的">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">车船费</label>
+                                                    <input name="trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">住宿费</label>
+                                                    <input name="hotel_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">打的费</label>
+                                                    <input name="local_trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="110.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">餐费</label>
+                                                    <input name="meat_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="20.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">租车费</label>
+                                                    <input name="local_car_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="10.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="content" class="control-label">其他费</label>
+                                                    <input name="other_cost_1" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="date" class="form-control" id="type"
+                                                        value="2019-12-28" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <select name="location" class="form-control select2bs4"
+                                                        style="width: 100%;" value="涪陵">
+                                                        <option selected="selected">涪陵</option>
+                                                        <option>涪陵</option>
+                                                        <option>北碚</option>
+                                                        <option>綦江</option>
+                                                        <option>大足</option>
+                                                        <option>巴南</option>
+                                                        <option>黔江</option>
+                                                        <option>长寿</option>
+                                                        <option>江津</option>
+                                                        <option>合川</option>
+                                                        <option>永川</option>
+                                                        <option>南川</option>
+                                                        <option>壁山</option>
+                                                        <option>铜梁</option>
+                                                        <option>潼南</option>
+                                                        <option>荣昌</option>
+                                                        <option>开州</option>
+                                                        <option>梁平</option>
+                                                        <option>武隆</option>
+                                                        <option>城口</option>
+                                                        <option>丰都</option>
+                                                        <option>垫江</option>
+                                                        <option>忠县</option>
+                                                        <option>云阳</option>
+                                                        <option>奉节</option>
+                                                        <option>巫山</option>
+                                                        <option>巫溪</option>
+                                                        <option>石柱</option>
+                                                        <option>秀山</option>
+                                                        <option>酉阳</option>
+                                                        <option>彭水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <input name="work" type="text" class="form-control" id="content"
+                                                        value="完成祥云流程 哈哈骗你的">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="hotel_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="110.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="meat_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="20.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_car_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="10.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="other_cost_1" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="date" class="form-control" id="type"
+                                                        value="2019-12-28" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <select name="location" class="form-control select2bs4"
+                                                        style="width: 100%;" value="涪陵">
+                                                        <option selected="selected">涪陵</option>
+                                                        <option>涪陵</option>
+                                                        <option>北碚</option>
+                                                        <option>綦江</option>
+                                                        <option>大足</option>
+                                                        <option>巴南</option>
+                                                        <option>黔江</option>
+                                                        <option>长寿</option>
+                                                        <option>江津</option>
+                                                        <option>合川</option>
+                                                        <option>永川</option>
+                                                        <option>南川</option>
+                                                        <option>壁山</option>
+                                                        <option>铜梁</option>
+                                                        <option>潼南</option>
+                                                        <option>荣昌</option>
+                                                        <option>开州</option>
+                                                        <option>梁平</option>
+                                                        <option>武隆</option>
+                                                        <option>城口</option>
+                                                        <option>丰都</option>
+                                                        <option>垫江</option>
+                                                        <option>忠县</option>
+                                                        <option>云阳</option>
+                                                        <option>奉节</option>
+                                                        <option>巫山</option>
+                                                        <option>巫溪</option>
+                                                        <option>石柱</option>
+                                                        <option>秀山</option>
+                                                        <option>酉阳</option>
+                                                        <option>彭水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <input name="work" type="text" class="form-control" id="content"
+                                                        value="完成祥云流程 哈哈骗你的">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="hotel_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="110.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="meat_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="20.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_car_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="10.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="other_cost_1" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="date" class="form-control" id="type"
+                                                        value="2019-12-28" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <select name="location" class="form-control select2bs4"
+                                                        style="width: 100%;" value="涪陵">
+                                                        <option selected="selected">涪陵</option>
+                                                        <option>涪陵</option>
+                                                        <option>北碚</option>
+                                                        <option>綦江</option>
+                                                        <option>大足</option>
+                                                        <option>巴南</option>
+                                                        <option>黔江</option>
+                                                        <option>长寿</option>
+                                                        <option>江津</option>
+                                                        <option>合川</option>
+                                                        <option>永川</option>
+                                                        <option>南川</option>
+                                                        <option>壁山</option>
+                                                        <option>铜梁</option>
+                                                        <option>潼南</option>
+                                                        <option>荣昌</option>
+                                                        <option>开州</option>
+                                                        <option>梁平</option>
+                                                        <option>武隆</option>
+                                                        <option>城口</option>
+                                                        <option>丰都</option>
+                                                        <option>垫江</option>
+                                                        <option>忠县</option>
+                                                        <option>云阳</option>
+                                                        <option>奉节</option>
+                                                        <option>巫山</option>
+                                                        <option>巫溪</option>
+                                                        <option>石柱</option>
+                                                        <option>秀山</option>
+                                                        <option>酉阳</option>
+                                                        <option>彭水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <input name="work" type="text" class="form-control" id="content"
+                                                        value="完成祥云流程 哈哈骗你的">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="hotel_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="110.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="meat_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="20.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_car_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="10.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="other_cost_1" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="date" class="form-control" id="type"
+                                                        value="2019-12-28" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <select name="location" class="form-control select2bs4"
+                                                        style="width: 100%;" value="涪陵">
+                                                        <option selected="selected">涪陵</option>
+                                                        <option>涪陵</option>
+                                                        <option>北碚</option>
+                                                        <option>綦江</option>
+                                                        <option>大足</option>
+                                                        <option>巴南</option>
+                                                        <option>黔江</option>
+                                                        <option>长寿</option>
+                                                        <option>江津</option>
+                                                        <option>合川</option>
+                                                        <option>永川</option>
+                                                        <option>南川</option>
+                                                        <option>壁山</option>
+                                                        <option>铜梁</option>
+                                                        <option>潼南</option>
+                                                        <option>荣昌</option>
+                                                        <option>开州</option>
+                                                        <option>梁平</option>
+                                                        <option>武隆</option>
+                                                        <option>城口</option>
+                                                        <option>丰都</option>
+                                                        <option>垫江</option>
+                                                        <option>忠县</option>
+                                                        <option>云阳</option>
+                                                        <option>奉节</option>
+                                                        <option>巫山</option>
+                                                        <option>巫溪</option>
+                                                        <option>石柱</option>
+                                                        <option>秀山</option>
+                                                        <option>酉阳</option>
+                                                        <option>彭水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <input name="work" type="text" class="form-control" id="content"
+                                                        value="完成祥云流程 哈哈骗你的">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="hotel_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="110.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="meat_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="20.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_car_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="10.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="other_cost_1" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="date" class="form-control" id="type"
+                                                        value="2019-12-28" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <select name="location" class="form-control select2bs4"
+                                                        style="width: 100%;" value="涪陵">
+                                                        <option selected="selected">涪陵</option>
+                                                        <option>涪陵</option>
+                                                        <option>北碚</option>
+                                                        <option>綦江</option>
+                                                        <option>大足</option>
+                                                        <option>巴南</option>
+                                                        <option>黔江</option>
+                                                        <option>长寿</option>
+                                                        <option>江津</option>
+                                                        <option>合川</option>
+                                                        <option>永川</option>
+                                                        <option>南川</option>
+                                                        <option>壁山</option>
+                                                        <option>铜梁</option>
+                                                        <option>潼南</option>
+                                                        <option>荣昌</option>
+                                                        <option>开州</option>
+                                                        <option>梁平</option>
+                                                        <option>武隆</option>
+                                                        <option>城口</option>
+                                                        <option>丰都</option>
+                                                        <option>垫江</option>
+                                                        <option>忠县</option>
+                                                        <option>云阳</option>
+                                                        <option>奉节</option>
+                                                        <option>巫山</option>
+                                                        <option>巫溪</option>
+                                                        <option>石柱</option>
+                                                        <option>秀山</option>
+                                                        <option>酉阳</option>
+                                                        <option>彭水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <input name="work" type="text" class="form-control" id="content"
+                                                        value="完成祥云流程 哈哈骗你的">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="hotel_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_trans_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="110.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="meat_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="20.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="local_car_cost" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="10.0">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <input name="other_cost_1" type="text"
+                                                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')"
+                                                        class="form-control" id="content" value="0.0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <input type="reset" class="btn btn-primary"> -->
+                                    <input value="提交流程" type="submit" class="btn btn-primary">
+                                </div>
+                                </form>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </div>
+            </section>
+            <!-- /.content -->
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- /.content-wrapper -->
     </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="../static/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="../static/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="../static/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="../static/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="../static/jqvmap/jquery.vmap.min.js"></script>
+    <!-- <script src="/static/jqvmap/maps/jquery.vmap.usa.js"></script> -->
+    <!-- jQuery Knob Chart -->
+    <script src="../static/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="../static/moment/moment.min.js"></script>
+    <script src="../static/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../static/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="../static/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="../static/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../static/dist/adminlte.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="../static/dist/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../static/dist/demo.js"></script>
+    <script src="../static/select2/js/select2.full.min.js"></script>
+    <script type='text/javascript'>
+        function jsOpenDetailModal1() {
+            $('#myDetailModal1').modal('toggle');//手动切换模态框。   还有一个modal('hide')	手动隐藏模态框。
+        }
+    </script>
+    <script type='text/javascript'>
+        $(function () {
+            //Initialize Select2 Elements
+            // $('.select2').select2()
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        })
+    </script>
+    <script type="text/javascript">
+
+        function selectFile() {
+            document.getElementById('file').click();
+        }
+
+        // 读取本地excel文件
+        function readWorkbookFromLocalFile(file, callback) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, { type: 'binary' });
+                console.log(data)
+                if (callback) callback(workbook);
+            };
+            reader.readAsBinaryString(file);
+        }
+
+        // // 读取 excel文件
+        // function outputWorkbook(workbook) {
+        //     var sheetNames = workbook.SheetNames; // 工作表名称集合
+        //     sheetNames.forEach(name => {
+        //         var worksheet = workbook.Sheets[name]; // 只能通过工作表名称来获取指定工作表
+        //         for (var key in worksheet) {
+        //             // v是读取单元格的原始值
+        //             console.log(key, key[0] === '!' ? worksheet[key] : worksheet[key].v);
+        //         }
+        //     });
+        // }
+        // function readWorkbook(workbook) {
+        //     var sheetNames = workbook.SheetNames; // 工作表名称集合
+        //     var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
+        //     var csv = XLSX.utils.sheet_to_csv(worksheet);
+        //     document.getElementById('result').innerHTML = csv2table(csv);
+        // }
+
+        // // 将csv转换成表格
+        // function csv2table(csv) {
+        //     var html = '<table>';
+        //     var rows = csv.split('\n');
+        //     rows.pop(); // 最后一行没用的
+        //     rows.forEach(function (row, idx) {
+        //         var columns = row.split(',');
+        //         columns.unshift(idx + 1); // 添加行索引
+        //         if (idx == 0) { // 添加列索引
+        //             html += '<tr>';
+        //             for (var i = 0; i < columns.length; i++) {
+        //                 html += '<th>' + (i == 0 ? '' : String.fromCharCode(65 + i - 1)) + '</th>';
+        //             }
+        //             html += '</tr>';
+        //         }
+        //         html += '<tr>';
+        //         columns.forEach(function (column) {
+        //             html += '<td>' + column + '</td>';
+        //         });
+        //         html += '</tr>';
+        //     });
+        //     html += '</table>';
+        //     return html;
+        // }
+
+        // function table2csv(table) {
+        //     var csv = [];
+        //     $(table).find('tr').each(function () {
+        //         var temp = [];
+        //         $(this).find('td').each(function () {
+        //             temp.push($(this).html());
+        //         })
+        //         temp.shift(); // 移除第一个
+        //         csv.push(temp.join(','));
+        //     });
+        //     csv.shift();
+        //     return csv.join('\n');
+        // }
+
+        // // csv转sheet对象
+        // function csv2sheet(csv) {
+        //     var sheet = {}; // 将要生成的sheet
+        //     csv = csv.split('\n');
+        //     csv.forEach(function (row, i) {
+        //         row = row.split(',');
+        //         if (i == 0) sheet['!ref'] = 'A1:' + String.fromCharCode(65 + row.length - 1) + (csv.length - 1);
+        //         row.forEach(function (col, j) {
+        //             sheet[String.fromCharCode(65 + j) + (i + 1)] = { v: col };
+        //         });
+        //     });
+        //     return sheet;
+        // }
+
+        // // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
+        // function sheet2blob(sheet, sheetName) {
+        //     sheetName = sheetName || 'sheet1';
+        //     var workbook = {
+        //         SheetNames: [sheetName],
+        //         Sheets: {}
+        //     };
+        //     workbook.Sheets[sheetName] = sheet;
+        //     // 生成excel的配置项
+        //     var wopts = {
+        //         bookType: 'xlsx', // 要生成的文件类型
+        //         bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+        //         type: 'binary'
+        //     };
+        //     var wbout = XLSX.write(workbook, wopts);
+        //     var blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
+        //     // 字符串转ArrayBuffer
+        //     function s2ab(s) {
+        //         var buf = new ArrayBuffer(s.length);
+        //         var view = new Uint8Array(buf);
+        //         for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        //         return buf;
+        //     }
+        //     return blob;
+        // }
+
+        // /**
+        //  * 通用的打开下载对话框方法，没有测试过具体兼容性
+        //  * @param url 下载地址，也可以是一个blob对象，必选
+        //  * @param saveName 保存文件名，可选
+        //  */
+        // function openDownloadDialog(url, saveName) {
+        //     if (typeof url == 'object' && url instanceof Blob) {
+        //         url = URL.createObjectURL(url); // 创建blob地址
+        //     }
+        //     var aLink = document.createElement('a');
+        //     aLink.href = url;
+        //     aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+        //     var event;
+        //     if (window.MouseEvent) event = new MouseEvent('click');
+        //     else {
+        //         event = document.createEvent('MouseEvents');
+        //         event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        //     }
+        //     aLink.dispatchEvent(event);
+        // }
+
+        // $(function () {
+        //     document.getElementById('file').addEventListener('change', function (e) {
+        //         var files = e.target.files;
+        //         if (files.length == 0) return;
+        //         var f = files[0];
+        //         if (!/\.xlsx$/g.test(f.name)) {
+        //             alert('仅支持读取xlsx格式！');
+        //             return;
+        //         }
+        //         readWorkbookFromLocalFile(f, function (workbook) {
+        //             readWorkbook(workbook);
+        //         });
+        //     });
+        //     loadRemoteFile('./sample/test.xlsx');
+        // });
+
+        // function loadRemoteFile(url) {
+        //     readWorkbookFromRemoteFile(url, function (workbook) {
+        //         readWorkbook(workbook);
+        //     });
+        // }
+
+        // function exportExcel() {
+        //     var csv = table2csv($('#result table')[0]);
+        //     var sheet = csv2sheet(csv);
+        //     var blob = sheet2blob(sheet);
+        //     openDownloadDialog(blob, '导出.xlsx');
+        // }
+    </script>
+</body>
+
+</html>
