@@ -131,7 +131,7 @@
                                     </h1>
                                     <div class="card-tools">
                                         <input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
-                                        <a type="button" id="export" href="#" class="btn btn-sm btn-secondary">导出模板</a>
+                                        <input type="button" class="btn btn-sm btn-secondary" onclick="exportExcel()" value="模板导出"/>
                                         <a type="button" id="import" href="javascript:selectFile()" class="btn btn-sm btn-secondary">模板导入</a>
                                     </div>
                                 </div>
@@ -730,6 +730,7 @@
         </div>
         <!-- /.content-wrapper -->
     </div>
+    <div id="result" contenteditable></div>
     <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="../static/jquery/jquery.min.js"></script>
@@ -786,7 +787,6 @@
 
         function selectFile() {
             document.getElementById('file').click();
-            console.log('data');
         }
 
         // 读取本地excel文件
@@ -802,16 +802,16 @@
         }
 
         // 读取 excel文件
-        function outputWorkbook(workbook) {
-            var sheetNames = workbook.SheetNames; // 工作表名称集合
-            sheetNames.forEach(name => {
-                var worksheet = workbook.Sheets[name]; // 只能通过工作表名称来获取指定工作表
-                for (var key in worksheet) {
-                    // v是读取单元格的原始值
-                    console.log(key, key[0] === '!' ? worksheet[key] : worksheet[key].v);
-                }
-            });
-        }
+        // function outputWorkbook(workbook) {
+        //     var sheetNames = workbook.SheetNames; // 工作表名称集合
+        //     sheetNames.forEach(name => {
+        //         var worksheet = workbook.Sheets[name]; // 只能通过工作表名称来获取指定工作表
+        //         for (var key in worksheet) {
+        //             // v是读取单元格的原始值
+        //             console.log(key, key[0] === '!' ? worksheet[key] : worksheet[key].v);
+        //         }
+        //     });
+        // }
         function readWorkbook(workbook) {
             var sheetNames = workbook.SheetNames; // 工作表名称集合
             var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
@@ -935,11 +935,6 @@
             loadRemoteFile('./sample/test.xlsx');
         });
 
-        function loadRemoteFile(url) {
-            readWorkbookFromRemoteFile(url, function (workbook) {
-                readWorkbook(workbook);
-            });
-        }
 
         function exportExcel() {
             var csv = table2csv($('#result table')[0]);
