@@ -731,6 +731,7 @@
         <!-- /.content-wrapper -->
     </div>
     <div id="result" contenteditable></div>
+    <div id="test"></div>
     <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="../static/jquery/jquery.min.js"></script>
@@ -941,6 +942,24 @@
             var sheet = csv2sheet(csv);
             var blob = sheet2blob(sheet);
             openDownloadDialog(blob, '导出.xlsx');
+        }
+
+        $(document).ready(function(){
+            $("#test").append("This is a test")
+        })
+
+        function modal2csv(modal) {
+            var csv = [];
+            $("modal").find('$row').each(function () {
+                var temp = [];
+                $(this).find('td').each(function () {
+                    temp.push($(this).html());
+                })
+                temp.shift(); // 移除第一个
+                csv.push(temp.join(','));
+            });
+            csv.shift();
+            return csv.join('\n');
         }
     </script>
 </body>
