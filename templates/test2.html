@@ -846,16 +846,33 @@
         }
 
         function table2csv(table) {
+            // var csv = [];
+            // $(table).find('tr').each(function () {
+            //     var temp = [];
+            //     $(this).find('td').each(function () {
+            //         temp.push($(this).html());
+            //     })
+            //     temp.shift(); // 移除第一个
+            //     csv.push(temp.join(','));
+            // });
+            // csv.shift();
+            // return csv.join('\n');
             var csv = [];
-            $(table).find('tr').each(function () {
+            $('#myDetailModal1').find('.modal-body').find('form').find('.row:first').each(function () {
                 var temp = [];
-                $(this).find('td').each(function () {
+                $(this).find('label').each(function (){
                     temp.push($(this).html());
                 })
-                temp.shift(); // 移除第一个
+                console.log(temp)
                 csv.push(temp.join(','));
-            });
-            csv.shift();
+            })
+            $('#myDetailModal1').find('.modal-body').find('form').find('.row').each(function () {
+                var temp = [];
+                $(this).find('input,select').each(function (){
+                    temp.push($(this).val());
+                })
+                csv.push(temp.join(','));
+            })
             return csv.join('\n');
         }
 
