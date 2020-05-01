@@ -875,7 +875,9 @@
                 })
                 csv.push(temp.join(','));
             })
+            console.log(csv.join('\n'))
             return csv.join('\n');
+            
         }
 
         // csv转sheet对象
@@ -884,7 +886,7 @@
             csv = csv.split('\n');
             csv.forEach(function (row, i) {
                 row = row.split(',');
-                if (i == 0) sheet['!ref'] = 'A1:' + String.fromCharCode(65 + row.length - 1) + (csv.length - 1);
+                if (i == 0) sheet['!ref'] = 'A1:' + String.fromCharCode(65 + row.length - 1) + (csv.length);
                 row.forEach(function (col, j) {
                     sheet[String.fromCharCode(65 + j) + (i + 1)] = { v: col };
                 });
@@ -941,30 +943,29 @@
 
         // excel 写入 modal
         function excel2modal(files) {
-            console.log(files);
             var reader = new FileReader();
             reader.onload = function (e) {
-                console.log('readWorkbookFromLocalFile');
                 var data = e.target.result;
                 var workbook = XLSX.read(data, { type: 'binary' });
                 data = workbook['Sheets']['sheet1']
-                console.log(data);
                 for (x in data) {
                     if (x[1] == 1) {
                         delete data[x]
                     }
                 }
+                var tempkeys = Object.keys(data);
+                tempkeys.shift()
                 $('#myDetailModal1').find('.modal-body').find('form').find('.row').each(function () {
-                    var tempkey = data.key();
+                    
                     $(this).find('input,select').each(function () {
-                        $(this).val(data[tempkey[0]]);
-                        delete tempkey[0]
+                        $(this).val(data[tempkeys[0]]['v']);
+                        console.log($(this).attr('name'))
+                        tempkeys.shift();
                     })
                 })
                 console.log(data);
             };
             reader.readAsBinaryString(files);
-            console.log('2');
         }
 
         $(function () {
