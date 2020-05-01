@@ -130,9 +130,12 @@
                                         Flows
                                     </h1>
                                     <div class="card-tools">
-                                        <input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
-                                        <input type="button" class="btn btn-sm btn-secondary" onclick="exportExcel()" value="模板导出"/>
-                                        <a type="button" id="import" href="javascript:selectFile()" class="btn btn-sm btn-secondary">模板导入</a>
+                                        <input type="file" id="file" style="display:none;"
+                                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                        <input type="button" class="btn btn-sm btn-secondary" onclick="exportExcel()"
+                                            value="模板导出" />
+                                        <a type="button" id="import" href="javascript:selectFile()"
+                                            class="btn btn-sm btn-secondary">模板导入</a>
                                     </div>
                                 </div>
                                 <div class="modal-body">
@@ -794,7 +797,6 @@
         function readWorkbookFromLocalFile(file, callback) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                console.log('readWorkbookFromLocalFile');
                 var data = e.target.result;
                 var workbook = XLSX.read(data, { type: 'binary' });
                 if (callback) callback(workbook);
@@ -860,7 +862,7 @@
             var csv = [];
             $('#myDetailModal1').find('.modal-body').find('form').find('.row:first').each(function () {
                 var temp = [];
-                $(this).find('label').each(function (){
+                $(this).find('label').each(function () {
                     temp.push($(this).html());
                 })
                 console.log(temp)
@@ -868,7 +870,7 @@
             })
             $('#myDetailModal1').find('.modal-body').find('form').find('.row').each(function () {
                 var temp = [];
-                $(this).find('input,select').each(function (){
+                $(this).find('input,select').each(function () {
                     temp.push($(this).val());
                 })
                 csv.push(temp.join(','));
@@ -937,6 +939,34 @@
             aLink.dispatchEvent(event);
         }
 
+        // excel 写入 modal
+        function excel2modal(files) {
+            console.log(files);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                console.log('readWorkbookFromLocalFile');
+                var data = e.target.result;
+                var workbook = XLSX.read(data, { type: 'binary' });
+                data = workbook['Sheets']['sheet1']
+                console.log(data);
+                for (x in data) {
+                    if (x[1] == 1) {
+                        delete data[x]
+                    }
+                }
+                $('#myDetailModal1').find('.modal-body').find('form').find('.row').each(function () {
+                    var tempkey = data.key();
+                    $(this).find('input,select').each(function () {
+                        $(this).val(data[tempkey[0]]);
+                        delete tempkey[0]
+                    })
+                })
+                console.log(data);
+            };
+            reader.readAsBinaryString(files);
+            console.log('2');
+        }
+
         $(function () {
             document.getElementById('file').addEventListener('change', function (e) {
                 var files = e.target.files;
@@ -946,11 +976,12 @@
                     alert('仅支持读取xlsx格式！');
                     return;
                 }
-                readWorkbookFromLocalFile(f, function (workbook) {
-                    readWorkbook(workbook);
-                });
+                // readWorkbookFromLocalFile(f, function (workbook) {
+                //     readWorkbook(workbook);
+                // });
+                excel2modal(f)
             });
-            loadRemoteFile('./sample/test.xlsx');
+            // loadRemoteFile('./sample/test.xlsx');
         });
 
 
@@ -961,23 +992,7 @@
             openDownloadDialog(blob, '导出.xlsx');
         }
 
-        $(document).ready(function(){
-            $("#test").append("This is a test")
-        })
 
-        function modal2csv(modal) {
-            var csv = [];
-            $("modal").find('$row').each(function () {
-                var temp = [];
-                $(this).find('td').each(function () {
-                    temp.push($(this).html());
-                })
-                temp.shift(); // 移除第一个
-                csv.push(temp.join(','));
-            });
-            csv.shift();
-            return csv.join('\n');
-        }
     </script>
 </body>
 
